@@ -34,11 +34,11 @@ export default function Hero() {
                         </Link>
                     </div>
                 </div>
-        
+
                 <div className="flex items-center justify-center">
                     <div className="relative">
 
-                        <div className="relative h-[520px] w-[340px] rounded-[2.5rem] bg-neutral-950 p-5 shadow-2xl">
+                        <div className="relative h-[340px] w-[520px] rounded-[2.5rem] bg-neutral-950 p-5 shadow-2xl">
 
                             <div className="flex items-center justify-between px-2">
                                 <span className="text-[10px] font-semibold tracking-[0.25em] text-white/40">
@@ -52,7 +52,7 @@ export default function Hero() {
                                     </span>
                                 </div>
                             </div>
-                            <div className="relative mt-5 h-[300px] overflow-hidden rounded-2xl border border-white/10 bg-black">
+                            <div className="relative mt-5 h-[245px] overflow-hidden rounded-2xl border border-white/10 bg-black">
                                 <Image
                                     src="/raymond.jpg"
                                     alt="Photo by Raymond"

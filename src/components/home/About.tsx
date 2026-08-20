@@ -59,7 +59,7 @@ export default function About() {
                                     </p>
 
                                     <p className="mt-2 text-xs text-black/40">
-                                        developer · photographer
+                                        developer · photographer · Athlete
                                     </p>
                                 </div>
 
