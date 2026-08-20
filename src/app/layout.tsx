@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,25 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sussybungus.dev",
-  description: "Raymond Lins personal website",
-  openGraph: {
-    title:"Sussybungus.dev",
-    description: "Raymond Lins personal Website",
-    type: "website",
-  },
+  title: "Sussy Bungus.Dev",
+  description: "Raymond Lin's personal portfolio.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">        
-        <Navbar />
-        {children}
-        </body>
+      <body>{children}</body>
     </html>
   );
 }
