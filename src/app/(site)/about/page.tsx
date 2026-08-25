@@ -4,6 +4,8 @@ import WhoIAm from "@/components/about/WhoIAm";
 import Timeline from "@/components/about/Timeline"
 import TechStack from "@/components/about/TechStack";
 import WhatIDo from "@/components/about/WhatIDo";
+import Background from "@/components/about/Background";
+import CTA from "@/components/about/CTA";
 export default function About() {
   return (
     <main>
@@ -12,6 +14,8 @@ export default function About() {
       <Timeline />
       <TechStack />
       <WhatIDo />
+      < Background />
+      < CTA />
     </main>
   );
 }
