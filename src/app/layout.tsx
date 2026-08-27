@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         siteName: "Sussy Bungus.Dev",
         images: [
             {
-                url: "/raymond2.png",
+                url: "/raymond2.jpg",
                 width: 1200,
                 height: 630,
                 alt: "Sussy Bungus.Dev — Raymond Lin's personal portfolio",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Sussy Bungus.Dev",
         description: "Raymond Lin's personal portfolio.",
-        images: ["/og-image.png"],
+        images: ["/raymond2.jpg"],
     },
 };
 

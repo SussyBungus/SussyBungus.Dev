@@ -83,14 +83,14 @@ export default function Hero() {
                             href="/projects"
                             className="rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition-transform hover:scale-105"
                         >
-                            projects
+                            Projects
                         </Link>
 
                         <Link
                             href="/about"
                             className="rounded-full border border-black/10 bg-black/5 px-6 py-3 text-sm font-medium transition-colors hover:bg-black/10"
                         >
-                            about me
+                            About Me
                         </Link>
                     </motion.div>
                 </motion.div>
