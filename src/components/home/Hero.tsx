@@ -116,7 +116,7 @@ export default function Hero() {
                         delay: 0.25,
                         ease,
                     }}
-                    className="flex items-center justify-center"
+                    className="flex w-full items-center justify-center md:mt-4"
                 >
                     <motion.div
                         animate={{
@@ -131,29 +131,43 @@ export default function Hero() {
                         className="relative w-full max-w-[600px]"
                     >
                         {/* Camera body */}
-                        <div className="relative h-[350px] w-full rounded-[3rem] bg-neutral-950 p-6 shadow-2xl">
-
+                        <div
+                            className="
+                                relative
+                                aspect-[1.45/1]
+                                w-full
+                                rounded-[2rem]
+                                bg-neutral-950
+                                p-4
+                                shadow-2xl
+                                sm:rounded-[2.5rem]
+                                sm:p-5
+                                md:aspect-auto
+                                md:h-[350px]
+                                md:rounded-[3rem]
+                                md:p-6
+                            "
+                        >
                             {/* Top controls */}
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1, duration: 0.6 }}
-                                className="flex items-center justify-between px-2"
+                                className="flex items-center justify-between px-1 sm:px-2"
                             >
-                                <div className="flex items-center gap-3">
-                                    <span className="text-[10px] font-semibold tracking-[0.25em] text-white/40">
+                                <div className="flex items-center gap-2 sm:gap-3">
+                                    <span className="text-[8px] font-semibold tracking-[0.2em] text-white/40 sm:text-[10px] sm:tracking-[0.25em]">
                                         RAYMOND
                                     </span>
 
                                     <span className="h-1 w-1 rounded-full bg-white/20" />
 
-                                    <span className="text-[10px] tracking-[0.2em] text-white/30">
+                                    <span className="text-[8px] tracking-[0.15em] text-white/30 sm:text-[10px] sm:tracking-[0.2em]">
                                         DIGITAL
                                     </span>
                                 </div>
 
-                                <div className="flex items-center gap-2">
-                                    {/* REC light */}
+                                <div className="flex items-center gap-1.5 sm:gap-2">
                                     <motion.span
                                         animate={{
                                             opacity: [1, 0.35, 1],
@@ -164,23 +178,42 @@ export default function Hero() {
                                             repeat: Infinity,
                                             ease: "easeInOut",
                                         }}
-                                        className="h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]"
+                                        className="h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_7px_rgba(239,68,68,0.6)] sm:h-2 sm:w-2"
                                     />
 
-                                    <span className="text-[10px] font-medium tracking-widest text-white/40">
+                                    <span className="text-[8px] font-medium tracking-widest text-white/40 sm:text-[10px]">
                                         REC
                                     </span>
                                 </div>
                             </motion.div>
 
                             {/* Camera screen */}
-                            <div className="absolute bottom-6 left-6 top-16 w-[62%] overflow-hidden rounded-2xl border border-white/10 bg-black">
+                            <div
+                                className="
+                                    absolute
+                                    bottom-4
+                                    left-4
+                                    top-14
+                                    w-[63%]
+                                    overflow-hidden
+                                    rounded-xl
+                                    border border-white/10
+                                    bg-black
+                                    sm:bottom-5
+                                    sm:left-5
+                                    sm:top-16
+                                    sm:rounded-2xl
+                                    md:bottom-6
+                                    md:left-6
+                                    md:top-16
+                                "
+                            >
                                 <Image
                                     src="/raymond2.jpg"
                                     alt="Photo by Raymond"
                                     fill
                                     priority
-                                    sizes="(max-width: 768px) 100vw, 360px"
+                                    sizes="(max-width: 640px) 60vw, 360px"
                                     className="object-cover"
                                 />
 
@@ -197,7 +230,21 @@ export default function Hero() {
                                         repeat: Infinity,
                                         ease: "easeInOut",
                                     }}
-                                    className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 border border-white/70"
+                                    className="
+                                        absolute
+                                        left-1/2
+                                        top-1/2
+                                        h-12
+                                        w-12
+                                        -translate-x-1/2
+                                        -translate-y-1/2
+                                        border
+                                        border-white/70
+                                        sm:h-16
+                                        sm:w-16
+                                        md:h-20
+                                        md:w-20
+                                    "
                                 >
                                     <span className="absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
                                 </motion.div>
@@ -207,7 +254,7 @@ export default function Hero() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ delay: 1.1 }}
-                                    className="absolute left-4 right-4 top-4 flex justify-between text-[10px] font-medium text-white drop-shadow"
+                                    className="absolute left-3 right-3 top-3 flex justify-between text-[7px] font-medium text-white drop-shadow sm:left-4 sm:right-4 sm:top-4 sm:text-[10px]"
                                 >
                                     <span>AF-S</span>
                                     <span>1/250</span>
@@ -217,7 +264,7 @@ export default function Hero() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ delay: 1.2 }}
-                                    className="absolute bottom-4 left-4 right-4 flex justify-between text-[10px] font-medium text-white drop-shadow"
+                                    className="absolute bottom-3 left-3 right-3 flex justify-between text-[7px] font-medium text-white drop-shadow sm:bottom-4 sm:left-4 sm:right-4 sm:text-[10px]"
                                 >
                                     <span>35mm</span>
                                     <span>F2.8</span>
@@ -226,31 +273,65 @@ export default function Hero() {
                             </div>
 
                             {/* Right controls */}
-                            <div className="absolute bottom-6 right-6 top-16 flex w-[28%] flex-col items-center justify-between">
-
+                            <div
+                                className="
+                                    absolute
+                                    bottom-4
+                                    right-4
+                                    top-14
+                                    flex
+                                    w-[27%]
+                                    flex-col
+                                    items-center
+                                    justify-between
+                                    sm:bottom-5
+                                    sm:right-5
+                                    sm:top-16
+                                    md:bottom-6
+                                    md:right-6
+                                "
+                            >
                                 {/* Dial */}
                                 <motion.div
                                     whileHover={{ rotate: 30 }}
-                                    transition={{ type: "spring", stiffness: 200 }}
-                                    className="flex h-16 w-16 items-center justify-center rounded-full border border-white/15 bg-white/[0.03] shadow-inner"
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 200,
+                                    }}
+                                    className="
+                                        flex
+                                        h-11
+                                        w-11
+                                        items-center
+                                        justify-center
+                                        rounded-full
+                                        border
+                                        border-white/15
+                                        bg-white/[0.03]
+                                        shadow-inner
+                                        sm:h-14
+                                        sm:w-14
+                                        md:h-16
+                                        md:w-16
+                                    "
                                 >
-                                    <div className="h-10 w-10 rounded-full border border-white/10">
-                                        <div className="mx-auto mt-2 h-2 w-2 rounded-full bg-white/60" />
+                                    <div className="h-7 w-7 rounded-full border border-white/10 sm:h-9 sm:w-9 md:h-10 md:w-10">
+                                        <div className="mx-auto mt-1.5 h-1.5 w-1.5 rounded-full bg-white/60 sm:mt-2 sm:h-2 sm:w-2" />
                                     </div>
                                 </motion.div>
 
                                 {/* Buttons */}
-                                <div className="flex gap-3">
+                                <div className="flex gap-2 sm:gap-3">
                                     <motion.div
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
-                                        className="h-10 w-10 rounded-full border border-white/10 bg-white/5"
+                                        className="h-7 w-7 rounded-full border border-white/10 bg-white/5 sm:h-9 sm:w-9 md:h-10 md:w-10"
                                     />
 
                                     <motion.div
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
-                                        className="h-10 w-10 rounded-full border border-white/10 bg-white/5"
+                                        className="h-7 w-7 rounded-full border border-white/10 bg-white/5 sm:h-9 sm:w-9 md:h-10 md:w-10"
                                     />
                                 </div>
 
@@ -258,11 +339,24 @@ export default function Hero() {
                                 <motion.div
                                     whileHover={{ scale: 1.08 }}
                                     whileTap={{ scale: 0.92 }}
-                                    className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-white/10"
+                                    className="
+                                        flex
+                                        h-11
+                                        w-11
+                                        items-center
+                                        justify-center
+                                        rounded-full
+                                        border-2
+                                        border-white/10
+                                        sm:h-14
+                                        sm:w-14
+                                        md:h-16
+                                        md:w-16
+                                    "
                                 >
                                     <motion.div
                                         whileTap={{ scale: 0.8 }}
-                                        className="h-10 w-10 rounded-full bg-white/90 shadow-lg"
+                                        className="h-7 w-7 rounded-full bg-white/90 shadow-lg sm:h-9 sm:w-9 md:h-10 md:w-10"
                                     />
                                 </motion.div>
                             </div>
@@ -275,12 +369,25 @@ export default function Hero() {
                                     repeat: Infinity,
                                     ease: "easeInOut",
                                 }}
-                                className="absolute bottom-5 left-1/2 h-1 w-24 -translate-x-1/2 rounded-full bg-white/10"
+                                className="
+                                    absolute
+                                    bottom-3
+                                    left-1/2
+                                    h-1
+                                    w-16
+                                    -translate-x-1/2
+                                    rounded-full
+                                    bg-white/10
+                                    sm:bottom-4
+                                    sm:w-20
+                                    md:bottom-5
+                                    md:w-24
+                                "
                             />
                         </div>
 
                         {/* Camera base */}
-                        <div className="absolute -bottom-4 left-1/2 h-7 w-32 -translate-x-1/2 rounded-b-2xl bg-neutral-900 shadow-xl" />
+                        <div className="absolute -bottom-3 left-1/2 h-5 w-24 -translate-x-1/2 rounded-b-xl bg-neutral-900 shadow-xl sm:-bottom-4 sm:h-6 sm:w-28 md:h-7 md:w-32" />
                     </motion.div>
                 </motion.div>
             </div>
