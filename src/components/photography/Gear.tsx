@@ -7,26 +7,29 @@ const gear = [
     {
         number: "01",
         category: "Camera",
-        name: "Sony",
-        description: "My main camera for everyday photography, trips, and experimenting.",
+        name: "Canon EOS R50",
+        description:
+            "My main camera for everyday photography, trips, and experimenting with different styles.",
     },
     {
         number: "02",
         category: "Lens",
-        name: "35mm",
-        description: "A versatile focal length that works well for everyday moments and travel.",
+        name: "RF-S 18–45mm",
+        description:
+            "A compact and versatile zoom lens that works well for everyday photography and travel.",
     },
     {
         number: "03",
         category: "Editing",
         name: "Lightroom",
-        description: "Where I edit, organize, and give my photos their final look.",
+        description:
+            "Where I edit, organize, and give my photos their final look.",
     },
 ];
 
 export default function Gear() {
     return (
-        <section className="px-6 py-20 sm:py-20">
+        <section className="px-6 py-20 sm:py-24">
             <div className="mx-auto max-w-6xl">
                 {/* Heading */}
                 <motion.div
@@ -78,7 +81,7 @@ export default function Gear() {
                         <div className="relative aspect-[4/3]">
                             <Image
                                 src="/camera.jpg"
-                                alt="Photography gear"
+                                alt="Canon EOS R50"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 55vw"
                                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
@@ -117,7 +120,7 @@ export default function Gear() {
                                         {item.number}
                                     </span>
 
-                                    <div className="flex-1">
+                                    <div className="min-w-0 flex-1">
                                         <p className="text-xs font-medium uppercase tracking-[0.15em] text-black/35">
                                             {item.category}
                                         </p>

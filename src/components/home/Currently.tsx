@@ -2,6 +2,8 @@
 
 import { motion } from "motion/react";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 const cards = [
     {
         icon: "📷",
@@ -10,8 +12,8 @@ const cards = [
         description:
             "taking photos and trying to get better at seeing things.",
         rotate: -2,
-        desktop: "left-[5%] top-[8%]",
-        width: "md:w-52",
+        desktop: "md:left-[4%] md:top-[7%]",
+        width: "md:w-56",
     },
     {
         icon: "</>",
@@ -20,7 +22,7 @@ const cards = [
         description:
             "experimenting with Next.js and making things I actually want to use.",
         rotate: 2,
-        desktop: "right-[8%] top-[12%]",
+        desktop: "md:right-[4%] md:top-[9%]",
         width: "md:w-56",
     },
     {
@@ -30,8 +32,8 @@ const cards = [
         description:
             "getting back into shape and working on my 5K.",
         rotate: -2,
-        desktop: "left-[18%] bottom-[8%]",
-        width: "md:w-52",
+        desktop: "md:left-[13%] md:bottom-[7%]",
+        width: "md:w-56",
     },
     {
         icon: "💻",
@@ -40,16 +42,15 @@ const cards = [
         description:
             "learning new things and building random projects.",
         rotate: 2,
-        desktop: "right-[20%] bottom-[10%]",
-        width: "md:w-52",
+        desktop: "md:right-[13%] md:bottom-[8%]",
+        width: "md:w-56",
     },
 ];
 
 export default function Currently() {
     return (
-        <section className="px-6 py-24">
-            <div className="mx-auto max-w-6xl">
-
+        <section className="w-full overflow-hidden px-6 py-24">
+            <div className="mx-auto w-full max-w-6xl">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
@@ -57,7 +58,7 @@ export default function Currently() {
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{
                         duration: 0.7,
-                        ease: [0.22, 1, 0.36, 1],
+                        ease,
                     }}
                     className="mb-14"
                 >
@@ -74,10 +75,9 @@ export default function Currently() {
                     </p>
                 </motion.div>
 
-                {/* Desktop Canvas / Mobile Grid */}
-                <div className="relative rounded-3xl border border-black/10 bg-black/[0.015] p-5 sm:p-8 md:min-h-[560px] md:overflow-hidden md:p-0">
-
-                    {/* Background */}
+                {/* Canvas */}
+                <div className="relative w-full overflow-hidden rounded-3xl border border-black/10 bg-black/[0.015] p-4 sm:p-6 md:min-h-[560px] md:p-0">
+                    {/* Background dots */}
                     <div className="pointer-events-none absolute inset-0 hidden opacity-[0.025] md:block">
                         <div
                             className="absolute inset-0"
@@ -89,9 +89,8 @@ export default function Currently() {
                         />
                     </div>
 
-                    {/* Mobile grid / Desktop scattered layout */}
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:block">
-
+                    {/* Cards */}
+                    <div className="relative grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:absolute md:inset-0 md:block">
                         {cards.map((card, index) => (
                             <motion.div
                                 key={card.title}
@@ -112,7 +111,7 @@ export default function Currently() {
                                 transition={{
                                     duration: 0.6,
                                     delay: index * 0.1,
-                                    ease: [0.22, 1, 0.36, 1],
+                                    ease,
                                 }}
                                 whileHover={{
                                     y: -8,
@@ -124,33 +123,28 @@ export default function Currently() {
                                 }}
                                 className={`
                                     relative
+                                    min-w-0
+                                    w-full
                                     ${card.width}
                                     md:absolute
                                     ${card.desktop}
                                     z-10
                                 `}
-                                style={{
-                                    ["--rotation" as string]: `${card.rotate}deg`,
-                                }}
                             >
                                 <div
-                                    className="
-                                        rounded-3xl
-                                        border border-black/10
-                                        bg-white
-                                        p-5
-                                        shadow-sm
-                                        transition-shadow
-                                        duration-300
-                                        hover:shadow-xl
-                                        md:rotate-[var(--rotation)]
-                                    "
+                                    className="w-full min-w-0 rounded-3xl border border-black/10 bg-white p-5 shadow-sm transition-shadow duration-300 hover:shadow-xl md:rotate-[var(--rotation)]"
+                                    style={{
+                                        "--rotation": `${card.rotate}deg`,
+                                    } as React.CSSProperties}
                                 >
                                     {/* Icon */}
-                                    <div className="flex h-28 items-center justify-center rounded-2xl bg-black/[0.03] sm:h-32">
+                                    <div className="flex h-28 w-full items-center justify-center overflow-hidden rounded-2xl bg-black/[0.03] sm:h-32">
                                         <motion.span
-                                            whileHover={{
-                                                scale: 1.1,
+                                            whileHover={{ scale: 1.1 }}
+                                            transition={{
+                                                type: "spring",
+                                                stiffness: 300,
+                                                damping: 15,
                                             }}
                                             className={
                                                 card.icon === "</>"
@@ -168,12 +162,12 @@ export default function Currently() {
                                     </p>
 
                                     {/* Title */}
-                                    <h3 className="mt-2 text-xl font-semibold tracking-[-0.03em]">
+                                    <h3 className="mt-2 break-words text-xl font-semibold tracking-[-0.03em]">
                                         {card.title}
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="mt-2 text-sm leading-relaxed text-black/45">
+                                    <p className="mt-2 break-words text-sm leading-relaxed text-black/45">
                                         {card.description}
                                     </p>
                                 </div>
@@ -181,7 +175,7 @@ export default function Currently() {
                         ))}
                     </div>
 
-                    {/* Desktop center marker */}
+                    {/* Center marker */}
                     <motion.div
                         initial={{
                             opacity: 0,
@@ -195,16 +189,9 @@ export default function Currently() {
                         transition={{
                             delay: 0.65,
                             duration: 0.6,
+                            ease,
                         }}
-                        className="
-                            absolute
-                            left-1/2
-                            top-1/2
-                            hidden
-                            -translate-x-1/2
-                            -translate-y-1/2
-                            md:flex
-                        "
+                        className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex"
                     >
                         <div className="flex h-20 w-20 items-center justify-center rounded-full border border-black/10 bg-white/80 text-center shadow-sm backdrop-blur">
                             <span className="text-[9px] font-medium uppercase tracking-[0.18em] text-black/35">

@@ -15,9 +15,9 @@ const photos = [
     {
         number: "02",
         title: "Somewhere new",
-        location: "Ontario",
+        location: "Ontario - Marble",
         year: "2026",
-        image: "/photo2.png",
+        image: "/marble.jpg",
         aspect: "aspect-[4/3]",
     },
     {
