@@ -6,9 +6,9 @@ import { motion } from "motion/react";
 
 export default function About() {
     return (
-        <section className="px-6 py-24">
+        <section className="w-full overflow-x-hidden px-6 py-24">
             <div className="mx-auto max-w-6xl">
-                <div className="grid items-center gap-16 md:grid-cols-[0.8fr_1.2fr]">
+                <div className="grid min-w-0 items-center gap-16 md:grid-cols-[0.8fr_1.2fr]">
 
                     {/* Left */}
                     <motion.div
@@ -16,6 +16,7 @@ export default function About() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.7 }}
+                        className="min-w-0"
                     >
                         <p className="text-sm font-medium text-black/40">
                             01 / About
@@ -52,22 +53,34 @@ export default function About() {
 
                     {/* ID Card */}
                     <motion.div
-                        initial={{ opacity: 0, x: 30, rotate: 3 }}
-                        whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
+                        initial={{
+                            opacity: 0,
+                            x: 30,
+                            rotate: 3,
+                        }}
+                        whileInView={{
+                            opacity: 1,
+                            x: 0,
+                            rotate: 0,
+                        }}
+                        viewport={{
+                            once: true,
+                            amount: 0.3,
+                        }}
                         transition={{
                             duration: 0.8,
                             ease: [0.22, 1, 0.36, 1],
                         }}
-                        className="flex items-center justify-center"
+                        className="flex min-w-0 w-full items-center justify-center"
                     >
-                        <div className="group relative [perspective:1200px]">
+                        <div className="group relative w-full max-w-[300px] [perspective:1200px]">
+
                             {/* Glow */}
                             <div className="absolute -inset-12 -z-10 rounded-full bg-black/[0.04] blur-3xl" />
 
                             {/* Flip container */}
                             <motion.div
-                                className="relative w-[300px] [transform-style:preserve-3d]"
+                                className="relative w-full [transform-style:preserve-3d]"
                                 whileHover={{ rotateY: 180 }}
                                 transition={{
                                     duration: 0.8,
@@ -127,12 +140,12 @@ export default function About() {
                                     <div className="relative mt-5 flex items-center justify-between border-t border-black/10 pt-4">
                                         <div className="flex h-4 items-end gap-[2px] opacity-25">
                                             {[2, 1, 3, 1, 2, 4, 1, 2, 3, 1].map(
-                                                (width, index) => (
+                                                (barWidth, index) => (
                                                     <div
                                                         key={index}
                                                         className="h-full bg-black"
                                                         style={{
-                                                            width: `${width}px`,
+                                                            width: `${barWidth}px`,
                                                         }}
                                                     />
                                                 )
@@ -246,6 +259,7 @@ export default function About() {
                                     {/* Shine */}
                                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/[0.02]" />
                                 </div>
+
                             </motion.div>
 
                             {/* Shadow */}
@@ -256,13 +270,18 @@ export default function About() {
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: 1, duration: 0.5 }}
+                                transition={{
+                                    delay: 1,
+                                    duration: 0.5,
+                                }}
                                 className="mt-5 text-center text-[10px] tracking-[0.15em] text-black/25"
                             >
                                 HOVER TO FLIP
                             </motion.p>
+
                         </div>
                     </motion.div>
+
                 </div>
             </div>
         </section>

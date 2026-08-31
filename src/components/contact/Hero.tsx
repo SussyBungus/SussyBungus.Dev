@@ -6,7 +6,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function ContactHero() {
     return (
-        <section className="px-6 pb-20 pt-20 sm:pb-20 sm:pt-25">
+        <section className="px-6 pb-20 pt-20 sm:pb-20 sm:pt-30">
             <div className="mx-auto max-w-6xl">
                 <motion.div
                     initial="hidden"
