@@ -193,7 +193,7 @@ export default function Hero() {
                 >
                     <div
                         ref={cameraCardRef}
-                        className="relative w-full max-w-[580px] select-none [transform-style:preserve-3d]"
+                        className="relative w-full max-w-[580px] select-none [transform-style:preserve-3d] will-change-transform"
                     >
                         {/* Ambient Camera Glow */}
                         <div className="absolute -inset-6 -z-10 rounded-[3.5rem] bg-black/[0.04] blur-2xl" />
