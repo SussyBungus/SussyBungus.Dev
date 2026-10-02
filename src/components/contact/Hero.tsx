@@ -1,103 +1,61 @@
 "use client";
 
-import { motion } from "motion/react";
-
-const ease = [0.22, 1, 0.36, 1] as const;
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function ContactHero() {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(
+        () => {
+            const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+            if (prefersReducedMotion) return;
+
+            gsap.from(containerRef.current!.children, {
+                opacity: 0,
+                y: 28,
+                stagger: 0.12,
+                duration: 0.75,
+                ease: "power3.out",
+                delay: 0.1,
+            });
+        },
+        { scope: containerRef }
+    );
+
     return (
-        <section className="px-6 pb-20 pt-20 sm:pb-20 sm:pt-30">
+        <section className="px-6 pb-16 pt-28 sm:pb-20 sm:pt-36">
             <div className="mx-auto max-w-6xl">
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                        hidden: {},
-                        visible: {
-                            transition: {
-                                staggerChildren: 0.12,
-                                delayChildren: 0.1,
-                            },
-                        },
-                    }}
-                >
+                <div ref={containerRef}>
                     {/* Label */}
-                    <motion.p
-                        variants={{
-                            hidden: { opacity: 0, y: 20 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                transition: {
-                                    duration: 0.6,
-                                    ease,
-                                },
-                            },
-                        }}
-                        className="text-xs font-medium tracking-[0.2em] text-black/35"
-                    >
-                        06 / LET'S TALK
-                    </motion.p>
+                    <div className="inline-flex items-center gap-2">
+                        <span className="glass-pill rounded-full px-3 py-1 text-xs font-medium tracking-[0.2em] text-black/50">
+                            06 / LET&apos;S TALK
+                        </span>
+                    </div>
 
                     {/* Heading */}
-                    <motion.h1
-                        variants={{
-                            hidden: { opacity: 0, y: 30 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                transition: {
-                                    duration: 0.8,
-                                    ease,
-                                },
-                            },
-                        }}
-                        className="mt-5 max-w-4xl text-5xl font-semibold tracking-[-0.055em] sm:text-6xl lg:text-7xl"
-                    >
+                    <h1 className="mt-6 max-w-4xl text-5xl font-semibold tracking-[-0.055em] sm:text-6xl lg:text-7xl">
                         Wanna chat with me?
-                    </motion.h1>
+                    </h1>
 
                     {/* Description */}
-                    <motion.p
-                        variants={{
-                            hidden: { opacity: 0, y: 25 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                transition: {
-                                    duration: 0.7,
-                                    ease,
-                                },
-                            },
-                        }}
-                        className="mt-6 max-w-xl text-base leading-relaxed text-black/50 sm:text-lg"
-                    >
+                    <p className="mt-6 max-w-xl text-base leading-relaxed text-black/50 sm:text-lg">
                         Whether you want to talk about a project, collaborate,
-                        or just say hi, here's where you can find me.
-                    </motion.p>
+                        or just say hi, here&apos;s where you can find me.
+                    </p>
 
-                    {/* Scroll indicator */}
-                    <motion.div
-                        variants={{
-                            hidden: { opacity: 0, y: 15 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                transition: {
-                                    duration: 0.6,
-                                    ease,
-                                },
-                            },
-                        }}
-                        className="mt-10 flex items-center gap-3"
-                    >
+                    {/* Online indicator */}
+                    <div className="mt-10 flex items-center gap-3">
                         <div className="h-px w-10 bg-black/15" />
-
-                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-black/30">
+                        <span className="glass-pill rounded-full px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.18em] text-black/40">
                             find me online
                         </span>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </div>
             </div>
         </section>
     );

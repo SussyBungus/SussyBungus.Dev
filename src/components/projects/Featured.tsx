@@ -6,9 +6,8 @@ import { motion } from "motion/react";
 
 export default function FeaturedProject() {
     return (
-        <section className="px-6 py-24">
+        <section className="px-6 py-20">
             <div className="mx-auto max-w-6xl">
-
                 {/* Section heading */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -18,14 +17,16 @@ export default function FeaturedProject() {
                         duration: 0.6,
                         ease: "easeOut",
                     }}
-                    className="mb-10"
+                    className="mb-8"
                 >
-                    <p className="text-xs font-medium tracking-[0.2em] text-black/35">
-                        02 / FEATURED
-                    </p>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 px-3.5 py-1 text-xs font-medium text-neutral-500 shadow-xs backdrop-blur-md">
+                        <span>01</span>
+                        <span className="h-1 w-1 rounded-full bg-neutral-300" />
+                        <span>Featured Project</span>
+                    </div>
                 </motion.div>
 
-                {/* Featured project */}
+                {/* Featured project glossy card */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -34,91 +35,91 @@ export default function FeaturedProject() {
                         duration: 0.7,
                         ease: "easeOut",
                     }}
-                    className="group grid overflow-hidden rounded-[2rem] border border-black/10 bg-black/[0.015] md:grid-cols-[1.15fr_0.85fr]"
+                    className="glass-panel group relative grid overflow-hidden rounded-[2.5rem] shadow-xl md:grid-cols-[1.15fr_0.85fr]"
                 >
-                    {/* Image */}
-                    <div className="relative min-h-[280px] overflow-hidden bg-black/[0.04] sm:min-h-[360px] md:min-h-[480px]">
+                    {/* Image Container with specular shine */}
+                    <div className="relative min-h-[300px] overflow-hidden bg-neutral-900 sm:min-h-[380px] md:min-h-[460px]">
                         <Image
                             src="/focusai.png"
-                            alt="FocusAI project"
+                            alt="FocusAI project platform"
                             fill
+                            priority
                             sizes="(max-width: 768px) 100vw, 60vw"
-                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                         />
 
-                        {/* Image overlay */}
-                        <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/[0.04]" />
+                        {/* Glossy overlay */}
+                        <div className="glass-lens-glare pointer-events-none absolute inset-0 opacity-40 transition-opacity duration-500 group-hover:opacity-70" />
 
-                        {/* Badge */}
-                        <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/70 px-4 py-2 text-xs font-medium text-white backdrop-blur-md">
-                            Featured project
+                        {/* Floating Badge */}
+                        <div className="absolute left-5 top-5 rounded-full border border-white/30 bg-black/60 px-3.5 py-1.5 text-xs font-medium text-white shadow-lg backdrop-blur-md">
+                            ✦ Featured Launch
                         </div>
                     </div>
 
-                    {/* Content */}
-                    <div className="flex flex-col justify-between p-7 sm:p-9 md:p-10">
-
+                    {/* Content Details */}
+                    <div className="flex flex-col justify-between p-8 sm:p-10 md:p-12">
                         <div>
-                            {/* Number / category */}
+                            {/* Category & Status */}
                             <div className="flex items-center gap-3">
-                                <span className="text-xs font-medium tracking-[0.2em] text-black/35">
+                                <span className="font-mono text-xs font-semibold text-neutral-400">
                                     01
                                 </span>
-
-                                <div className="h-px w-10 bg-black/10" />
-
-                                <span className="text-xs font-medium uppercase tracking-[0.15em] text-black/35">
-                                    Productivity
+                                <div className="h-px w-8 bg-neutral-200" />
+                                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+                                    AI &bull; Productivity
                                 </span>
                             </div>
 
-                            <h2 className="mt-6 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">
+                            <h2 className="mt-5 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
                                 FocusAI
                             </h2>
 
-                            <p className="mt-5 text-base leading-relaxed text-black/50">
-                                An AI-powered productivity platform designed
-                                to help students organize assignments, stay
-                                on top of deadlines, and stop procrastinating.
+                            <p className="mt-4 text-base leading-relaxed text-neutral-600">
+                                An intelligent productivity assistant engineered to help students organize course assignments, forecast upcoming deadlines, and break study sessions into manageable milestones.
                             </p>
 
-                            {/* Technologies */}
-                            <div className="mt-7 flex flex-wrap gap-2">
+                            {/* Tech Stack Chips */}
+                            <div className="mt-6 flex flex-wrap gap-2">
                                 {[
                                     "Next.js",
                                     "TypeScript",
                                     "Supabase",
-                                    "AI",
-                                ].map((technology) => (
+                                    "Tailwind CSS",
+                                    "OpenAI API",
+                                ].map((tech) => (
                                     <span
-                                        key={technology}
-                                        className="rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs text-black/55"
+                                        key={tech}
+                                        className="glass-pill rounded-full px-3 py-1 text-xs font-medium text-neutral-700 shadow-2xs"
                                     >
-                                        {technology}
+                                        {tech}
                                     </span>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Links */}
-                        <div className="mt-10 flex flex-wrap gap-3">
-                            <Link
-                                href="/projects/focusai"
-                                className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                            >
-                                View project
-                                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                                    →
-                                </span>
-                            </Link>
-
-                            <Link
+                        {/* Actions */}
+                        <div className="mt-10 flex flex-wrap items-center gap-3">
+                            <a
                                 href="https://focusai-gray.vercel.app"
                                 target="_blank"
-                                className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-2.5 text-sm font-medium text-black/70 transition-colors duration-300 hover:bg-black/5"
+                                rel="noopener noreferrer"
+                                className="group/btn inline-flex items-center gap-2 rounded-full bg-neutral-950 px-6 py-3 text-sm font-medium text-white shadow-md transition-all duration-300 hover:scale-105 hover:bg-neutral-900 hover:shadow-xl"
                             >
-                                Live site ↗
-                            </Link>
+                                <span>Launch App</span>
+                                <span className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">
+                                    ↗
+                                </span>
+                            </a>
+
+                            <a
+                                href="https://github.com/SussyBungus"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="glass-pill inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium text-neutral-800 transition-all duration-300 hover:scale-105 hover:bg-white"
+                            >
+                                <span>Source Code</span>
+                            </a>
                         </div>
                     </div>
                 </motion.div>

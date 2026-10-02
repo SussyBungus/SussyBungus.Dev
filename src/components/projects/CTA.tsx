@@ -1,40 +1,66 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function CTA() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(
+        () => {
+            const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+            if (prefersReducedMotion) return;
+
+            gsap.from(cardRef.current, {
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 80%",
+                    once: true,
+                },
+                opacity: 0,
+                y: 35,
+                duration: 0.8,
+                ease: "power3.out",
+            });
+        },
+        { scope: sectionRef }
+    );
+
     return (
-        <section className="px-6">
+        <section ref={sectionRef} className="px-6 py-12 sm:py-16">
             <div className="mx-auto max-w-6xl">
-                <motion.div
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{
-                        duration: 0.7,
-                        ease: "easeOut",
-                    }}
-                    className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-black px-8 py-16 text-white sm:px-12 sm:py-20"
+                <div
+                    ref={cardRef}
+                    className="glass-dark relative overflow-hidden rounded-[2.5rem] p-8 sm:p-14 md:p-16 text-white"
                 >
-                    {/* Subtle glow */}
-                    <div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-white/[0.06] blur-3xl" />
+                    {/* Ambient subtle glow & glare */}
+                    <div className="glass-lens-glare pointer-events-none absolute inset-0 opacity-20" />
+                    <div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-white/[0.08] blur-3xl" />
+                    <div className="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-white/[0.04] blur-3xl" />
 
                     <div className="relative">
-                        <p className="text-xs font-medium tracking-[0.2em] text-white/40">
-                            04 / WHAT'S NEXT
-                        </p>
+                        <span className="inline-block rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium tracking-[0.2em] text-white/60 backdrop-blur-md">
+                            04 / WHAT&apos;S NEXT
+                        </span>
 
-                        <div className="mt-6 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+                        <div className="mt-8 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
                             <div>
-                                <h2 className="max-w-2xl text-4xl font-medium leading-tight tracking-[-0.05em] sm:text-5xl lg:text-6xl">
+                                <h2 className="max-w-2xl text-4xl font-medium leading-[1.1] tracking-[-0.05em] sm:text-5xl lg:text-6xl text-white">
                                     More ideas are
                                     <br />
                                     already on the way.
                                 </h2>
 
-                                <p className="mt-6 max-w-lg text-base leading-relaxed text-white/45 sm:text-lg">
-                                    I'm always building something new,
+                                <p className="mt-6 max-w-lg text-base leading-relaxed text-white/50 sm:text-lg">
+                                    I&apos;m always building something new,
                                     experimenting with ideas, or finding
                                     another excuse to make something.
                                 </p>
@@ -42,16 +68,16 @@ export default function CTA() {
 
                             <Link
                                 href="/about"
-                                className="group inline-flex w-fit items-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                                className="group inline-flex w-fit items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black shadow-lg transition-all duration-300 hover:scale-105 hover:bg-white/90 hover:shadow-white/10 active:scale-[0.98]"
                             >
-                                more about me
+                                <span>more about me</span>
                                 <span className="transition-transform duration-300 group-hover:translate-x-1">
                                     →
                                 </span>
                             </Link>
                         </div>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

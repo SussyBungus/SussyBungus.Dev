@@ -1,96 +1,147 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "motion/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const cards = [
     {
         icon: "📷",
-        category: "Camera",
-        title: "photography",
+        category: "Visuals",
+        title: "Street & Travel Photography",
         description:
-            "taking photos and trying to get better at seeing things.",
+            "Taking photos with my Canon R50 and training my eye to notice light and composition.",
         rotate: -2,
-        desktop: "md:left-[4%] md:top-[7%]",
-        width: "md:w-56",
+        desktop: "md:left-[5%] md:top-[8%]",
+        width: "md:w-64",
+        tag: "In Progress",
     },
     {
         icon: "</>",
-        category: "Building",
-        title: "web projects",
+        category: "Engineering",
+        title: "Next.js Web Applications",
         description:
-            "experimenting with Next.js and making things I actually want to use.",
-        rotate: 2,
-        desktop: "md:right-[4%] md:top-[9%]",
-        width: "md:w-56",
+            "Experimenting with App Router, Turbopack, and clean UI engineering for interactive tools.",
+        rotate: 2.5,
+        desktop: "md:right-[5%] md:top-[10%]",
+        width: "md:w-64",
+        tag: "Active",
     },
     {
         icon: "🏃",
-        category: "Training",
-        title: "running",
+        category: "Fitness",
+        title: "Endurance & 5K Training",
         description:
-            "getting back into shape and working on my 5K.",
-        rotate: -2,
-        desktop: "md:left-[13%] md:bottom-[7%]",
-        width: "md:w-56",
+            "Consistent weekly mileage, cardio endurance, and training for sub-22 min 5K pace.",
+        rotate: -2.5,
+        desktop: "md:left-[12%] md:bottom-[8%]",
+        width: "md:w-64",
+        tag: "Routine",
     },
     {
-        icon: "💻",
-        category: "Learning",
-        title: "computer science",
+        icon: "💡",
+        category: "Academics",
+        title: "Computer Science Foundations",
         description:
-            "learning new things and building random projects.",
+            "Data structures, software design patterns, and exploring AI agent architectures.",
         rotate: 2,
-        desktop: "md:right-[13%] md:bottom-[8%]",
-        width: "md:w-56",
+        desktop: "md:right-[12%] md:bottom-[9%]",
+        width: "md:w-64",
+        tag: "Lifelong",
     },
 ];
 
 export default function Currently() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const headingRef = useRef<HTMLDivElement>(null);
+    const canvasRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(
+        () => {
+            const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+            if (prefersReducedMotion) return;
+
+            gsap.from(headingRef.current, {
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.7,
+                ease: "power2.out",
+            });
+
+            gsap.from(canvasRef.current, {
+                scrollTrigger: {
+                    trigger: canvasRef.current,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse",
+                },
+                opacity: 0,
+                scale: 0.96,
+                duration: 0.8,
+                ease: "power2.out",
+            });
+        },
+        { scope: sectionRef }
+    );
+
     return (
-        <section className="w-full overflow-hidden px-6 py-24">
+        <section
+            ref={sectionRef}
+            className="relative w-full overflow-hidden px-6 py-28"
+        >
             <div className="mx-auto w-full max-w-6xl">
                 {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{
-                        duration: 0.7,
-                        ease,
-                    }}
-                    className="mb-14"
-                >
-                    <p className="text-sm font-medium text-black/40">
-                        02 / Currently
-                    </p>
+                <div ref={headingRef} className="mb-14">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 px-3.5 py-1 text-xs font-medium text-neutral-500 shadow-xs backdrop-blur-md">
+                        <span>02</span>
+                        <span className="h-1 w-1 rounded-full bg-neutral-300" />
+                        <span>Currently</span>
+                    </div>
 
-                    <h2 className="mt-5 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-                        Currently
+                    <h2 className="mt-5 text-4xl font-bold tracking-[-0.04em] text-neutral-950 sm:text-5xl lg:text-6xl">
+                        What&apos;s on my radar.
                     </h2>
 
-                    <p className="mt-5 max-w-lg text-lg leading-relaxed text-black/50">
-                        a few things I'm currently working on
+                    <p className="mt-4 max-w-lg text-lg leading-relaxed text-neutral-600">
+                        A quick snapshot of the projects, habits, and ideas currently occupying my time.
                     </p>
-                </motion.div>
+                </div>
 
-                {/* Canvas */}
-                <div className="relative w-full overflow-hidden rounded-3xl border border-black/10 bg-black/[0.015] p-4 sm:p-6 md:min-h-[560px] md:p-0">
-                    {/* Background dots */}
-                    <div className="pointer-events-none absolute inset-0 hidden opacity-[0.025] md:block">
+                {/* Interactive Glass Bulletin Canvas */}
+                <div
+                    ref={canvasRef}
+                    className="glass-panel relative w-full overflow-hidden rounded-[2.5rem] p-6 shadow-xl md:min-h-[580px] md:p-0"
+                >
+                    {/* Ambient subtle light gradient behind cards */}
+                    <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-blue-100/40 blur-3xl" />
+                    <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-amber-100/40 blur-3xl" />
+
+                    {/* Background Dot Matrix */}
+                    <div className="pointer-events-none absolute inset-0 opacity-[0.035]">
                         <div
                             className="absolute inset-0"
                             style={{
                                 backgroundImage:
-                                    "radial-gradient(circle, black 1px, transparent 1px)",
-                                backgroundSize: "24px 24px",
+                                    "radial-gradient(circle, black 1.5px, transparent 1.5px)",
+                                backgroundSize: "28px 28px",
                             }}
                         />
                     </div>
 
-                    {/* Cards */}
-                    <div className="relative grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:absolute md:inset-0 md:block">
+                    {/* Grid of Interactive Glass Cards */}
+                    <div className="relative grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:absolute md:inset-0 md:block">
                         {cards.map((card, index) => (
                             <motion.div
                                 key={card.title}
@@ -106,24 +157,22 @@ export default function Currently() {
                                 }}
                                 viewport={{
                                     once: true,
-                                    amount: 0.15,
+                                    amount: 0.2,
                                 }}
                                 transition={{
-                                    duration: 0.6,
-                                    delay: index * 0.1,
+                                    duration: 0.65,
+                                    delay: index * 0.08,
                                     ease,
                                 }}
                                 whileHover={{
-                                    y: -8,
+                                    y: -10,
                                     rotate: 0,
-                                    scale: 1.025,
-                                    transition: {
-                                        duration: 0.25,
-                                    },
+                                    scale: 1.03,
+                                    zIndex: 40,
+                                    transition: { duration: 0.25 },
                                 }}
                                 className={`
                                     relative
-                                    min-w-0
                                     w-full
                                     ${card.width}
                                     md:absolute
@@ -132,73 +181,41 @@ export default function Currently() {
                                 `}
                             >
                                 <div
-                                    className="w-full min-w-0 rounded-3xl border border-black/10 bg-white p-5 shadow-sm transition-shadow duration-300 hover:shadow-xl md:rotate-[var(--rotation)]"
-                                    style={{
-                                        "--rotation": `${card.rotate}deg`,
-                                    } as React.CSSProperties}
+                                    className="glass-panel group w-full cursor-pointer rounded-3xl p-5.5 shadow-md transition-all duration-300 hover:shadow-2xl hover:border-black/15 md:rotate-[var(--rotation)]"
+                                    style={
+                                        {
+                                            "--rotation": `${card.rotate}deg`,
+                                        } as React.CSSProperties
+                                    }
                                 >
-                                    {/* Icon */}
-                                    <div className="flex h-28 w-full items-center justify-center overflow-hidden rounded-2xl bg-black/[0.03] sm:h-32">
-                                        <motion.span
-                                            whileHover={{ scale: 1.1 }}
-                                            transition={{
-                                                type: "spring",
-                                                stiffness: 300,
-                                                damping: 15,
-                                            }}
-                                            className={
-                                                card.icon === "</>"
-                                                    ? "font-mono text-4xl"
-                                                    : "text-5xl"
-                                            }
-                                        >
+                                    {/* Card Header: Icon + Status Pill */}
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-black/5 bg-black/[0.03] text-2xl shadow-xs transition-transform duration-300 group-hover:scale-110">
                                             {card.icon}
-                                        </motion.span>
+                                        </div>
+                                        <span className="rounded-full border border-black/5 bg-white/80 px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-wider text-neutral-500 shadow-xs">
+                                            {card.tag}
+                                        </span>
                                     </div>
 
                                     {/* Category */}
-                                    <p className="mt-5 text-[10px] font-medium uppercase tracking-[0.18em] text-black/35">
+                                    <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
                                         {card.category}
                                     </p>
 
                                     {/* Title */}
-                                    <h3 className="mt-2 break-words text-xl font-semibold tracking-[-0.03em]">
+                                    <h3 className="mt-1 text-base font-bold tracking-tight text-neutral-900">
                                         {card.title}
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="mt-2 break-words text-sm leading-relaxed text-black/45">
+                                    <p className="mt-2 text-xs leading-relaxed text-neutral-600">
                                         {card.description}
                                     </p>
                                 </div>
                             </motion.div>
                         ))}
                     </div>
-
-                    {/* Center marker */}
-                    <motion.div
-                        initial={{
-                            opacity: 0,
-                            scale: 0.8,
-                        }}
-                        whileInView={{
-                            opacity: 1,
-                            scale: 1,
-                        }}
-                        viewport={{ once: true }}
-                        transition={{
-                            delay: 0.65,
-                            duration: 0.6,
-                            ease,
-                        }}
-                        className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex"
-                    >
-                        <div className="flex h-20 w-20 items-center justify-center rounded-full border border-black/10 bg-white/80 text-center shadow-sm backdrop-blur">
-                            <span className="text-[9px] font-medium uppercase tracking-[0.18em] text-black/35">
-                                right now
-                            </span>
-                        </div>
-                    </motion.div>
                 </div>
             </div>
         </section>

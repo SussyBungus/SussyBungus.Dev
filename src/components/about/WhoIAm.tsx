@@ -1,7 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "motion/react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const details = [
     {
@@ -19,158 +24,145 @@ const details = [
 ];
 
 export default function WhoIAm() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const imageRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const detailsRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(
+        () => {
+            const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+            if (prefersReducedMotion) return;
+
+            // Image slide in from left
+            gsap.from(imageRef.current, {
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 80%",
+                    once: true,
+                },
+                opacity: 0,
+                x: -48,
+                scale: 0.96,
+                duration: 0.9,
+                ease: "power3.out",
+            });
+
+            // Content stagger
+            gsap.from(contentRef.current!.children, {
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 80%",
+                    once: true,
+                },
+                opacity: 0,
+                y: 28,
+                filter: "blur(4px)",
+                stagger: 0.12,
+                duration: 0.7,
+                ease: "power3.out",
+                delay: 0.15,
+                clearProps: "filter",
+            });
+
+            // Details stagger
+            gsap.from(detailsRef.current!.children, {
+                scrollTrigger: {
+                    trigger: detailsRef.current,
+                    start: "top 88%",
+                    once: true,
+                },
+                opacity: 0,
+                y: 16,
+                stagger: 0.1,
+                duration: 0.55,
+                ease: "power2.out",
+            });
+        },
+        { scope: sectionRef }
+    );
+
     return (
-        <section className="px-6 py-24">
+        <section ref={sectionRef} className="px-6 py-24">
             <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-[360px_1fr] md:gap-16">
 
-                {/* Image */}
-                <motion.div
-                    initial={{
-                        opacity: 0,
-                        x: -40,
-                        scale: 0.96,
-                    }}
-                    whileInView={{
-                        opacity: 1,
-                        x: 0,
-                        scale: 1,
-                    }}
-                    viewport={{
-                        once: true,
-                        amount: 0.3,
-                    }}
-                    transition={{
-                        duration: 0.8,
-                        ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className="group relative w-full max-w-[360px]"
-                >
-                    <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl">
-                        <Image
-                            src="/raymond.jpg"
-                            alt="Raymond"
-                            fill
-                            sizes="(max-width: 768px) 100vw, 360px"
-                            className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        />
+                {/* Image — glass-framed */}
+                <div ref={imageRef} className="group relative w-full max-w-[360px]">
+                    {/* Ambient glow */}
+                    <div className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-black/[0.035] blur-2xl" />
 
-                        <div className="pointer-events-none absolute inset-0 bg-black/[0.02] transition-opacity duration-500 group-hover:opacity-0" />
+                    <div className="glass-panel relative aspect-[3/4] w-full overflow-hidden rounded-3xl p-1.5">
+                        {/* Specular glare */}
+                        <div className="glass-lens-glare pointer-events-none absolute inset-0 z-10 rounded-3xl opacity-40" />
+
+                        <div className="relative h-full w-full overflow-hidden rounded-[calc(1.5rem-6px)]">
+                            <Image
+                                src="/raymond.jpg"
+                                alt="Raymond"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 360px"
+                                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                            />
+                        </div>
                     </div>
 
-                    {/* Image shadow */}
-                    <div className="pointer-events-none absolute -bottom-3 left-8 right-8 -z-10 h-8 rounded-full bg-black/10 blur-xl" />
-                </motion.div>
+                    {/* Drop shadow */}
+                    <div className="pointer-events-none absolute -bottom-4 left-8 right-8 -z-10 h-10 rounded-full bg-black/12 blur-xl" />
+                </div>
 
                 {/* Content */}
-                <div className="max-w-2xl">
+                <div ref={contentRef} className="max-w-2xl">
 
                     {/* Label */}
-                    <motion.p
-                        initial={{ opacity: 0, y: 15 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.4 }}
-                        transition={{
-                            duration: 0.5,
-                            delay: 0.1,
-                        }}
-                        className="text-xs font-medium tracking-[0.2em] text-black/35"
-                    >
+                    <p className="text-xs font-medium tracking-[0.2em] text-black/35">
                         01 / WHO I AM
-                    </motion.p>
+                    </p>
 
                     {/* Heading */}
-                    <motion.h2
-                        initial={{
-                            opacity: 0,
-                            y: 25,
-                            filter: "blur(6px)",
-                        }}
-                        whileInView={{
-                            opacity: 1,
-                            y: 0,
-                            filter: "blur(0px)",
-                        }}
-                        viewport={{
-                            once: true,
-                            amount: 0.4,
-                        }}
-                        transition={{
-                            duration: 0.7,
-                            delay: 0.15,
-                            ease: [0.22, 1, 0.36, 1],
-                        }}
-                        className="mt-6 text-3xl font-medium leading-tight tracking-[-0.04em] sm:text-4xl"
-                    >
-                        I'm Raymond — a developer,
+                    <h2 className="mt-6 text-3xl font-medium leading-tight tracking-[-0.04em] sm:text-4xl">
+                        I&apos;m Raymond — a developer,
                         photographer, and someone who
                         likes making things.
-                    </motion.h2>
+                    </h2>
 
                     {/* Paragraphs */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{
-                            once: true,
-                            amount: 0.3,
-                        }}
-                        transition={{
-                            duration: 0.7,
-                            delay: 0.25,
-                        }}
-                        className="mt-8 space-y-5 text-base leading-relaxed text-black/50 sm:text-lg"
-                    >
+                    <div className="mt-8 space-y-5 text-base leading-relaxed text-black/50 sm:text-lg">
                         <p>
                             I enjoy building things from scratch, experimenting
                             with new ideas, and learning how things work.
                         </p>
 
                         <p>
-                            Outside of code, I'm usually taking photos,
+                            Outside of code, I&apos;m usually taking photos,
                             playing sports, or finding something new to
                             get obsessed with.
                         </p>
-                    </motion.div>
+                    </div>
 
-                    {/* Details */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{
-                            once: true,
-                            amount: 0.3,
-                        }}
-                        transition={{
-                            duration: 0.7,
-                            delay: 0.4,
-                        }}
-                        className="mt-10 grid grid-cols-1 gap-6 border-t border-black/10 pt-7 sm:grid-cols-3"
+                    {/* Details — glass pills */}
+                    <div
+                        ref={detailsRef}
+                        className="mt-10 grid grid-cols-1 gap-4 border-t border-black/10 pt-7 sm:grid-cols-3"
                     >
-                        {details.map((detail, index) => (
-                            <motion.div
+                        {details.map((detail) => (
+                            <div
                                 key={detail.label}
-                                initial={{ opacity: 0, y: 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{
-                                    duration: 0.4,
-                                    delay: 0.45 + index * 0.08,
-                                }}
-                                whileHover={{ y: -3 }}
-                                className="transition-transform"
+                                className="glass-pill group rounded-2xl px-4 py-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                             >
                                 <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-black/35">
                                     {detail.label}
                                 </p>
 
-                                <p className="mt-2 text-sm font-medium text-black/70">
+                                <p className="mt-1.5 text-sm font-medium text-black/70">
                                     {detail.value}
                                 </p>
-                            </motion.div>
+                            </div>
                         ))}
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
     );
-}   
+}

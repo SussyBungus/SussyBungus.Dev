@@ -14,7 +14,7 @@ const photos = [
     },
     {
         number: "02",
-        title: "Somewhere new",
+        title: "Somewhere New",
         location: "Ontario - Marble",
         year: "2026",
         image: "/marble.jpg",
@@ -32,7 +32,7 @@ const photos = [
 
 export default function SelectedWork() {
     return (
-        <section className="px-6">
+        <section className="px-6 py-12">
             <div className="mx-auto max-w-6xl">
                 {/* Heading */}
                 <motion.div
@@ -45,17 +45,22 @@ export default function SelectedWork() {
                     }}
                     className="mb-14"
                 >
-                    <p className="text-xs font-medium tracking-[0.2em] text-black/35">
-                        02 / SELECTED WORK
-                    </p>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 px-3.5 py-1 text-xs font-medium text-neutral-500 shadow-xs backdrop-blur-md">
+                        <span>02</span>
+                        <span className="h-1 w-1 rounded-full bg-neutral-300" />
+                        <span>Selected Frames</span>
+                    </div>
 
-                    <h2 className="mt-4 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">
-                        A few of my favorites.
+                    <h2 className="mt-4 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
+                        A Few of My Favorites.
                     </h2>
+                    <p className="mt-2 text-base text-neutral-500">
+                        Moments captured in natural lighting across travel and everyday exploration.
+                    </p>
                 </motion.div>
 
-                {/* Photos */}
-                <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:items-start md:gap-8">
+                {/* Photos Grid */}
+                <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:items-start md:gap-8">
                     {photos.map((photo, index) => (
                         <motion.article
                             key={photo.number}
@@ -73,45 +78,46 @@ export default function SelectedWork() {
                             }}
                             transition={{
                                 duration: 0.7,
-                                delay: index * 0.1,
+                                delay: index * 0.12,
                                 ease: "easeOut",
                             }}
                             className={`group ${
-                                index === 1 ? "md:mt-16" : ""
+                                index === 1 ? "md:mt-12" : ""
                             }`}
                         >
-                            {/* Image */}
+                            {/* Glossy Image Container */}
                             <div
-                                className={`relative overflow-hidden rounded-[1.75rem] bg-black/[0.04] ${photo.aspect}`}
+                                className={`glass-panel relative overflow-hidden rounded-[2rem] p-2 shadow-md transition-all duration-500 hover:shadow-2xl hover:-translate-y-1.5`}
                             >
-                                <Image
-                                    src={photo.image}
-                                    alt={photo.title}
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 33vw"
-                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
-                                />
+                                <div className={`relative w-full overflow-hidden rounded-[1.6rem] bg-neutral-900 ${photo.aspect}`}>
+                                    <Image
+                                        src={photo.image}
+                                        alt={photo.title}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                    />
 
-                                {/* Hover overlay */}
-                                <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/[0.04]" />
+                                    {/* Specular glare overlay */}
+                                    <div className="glass-lens-glare pointer-events-none absolute inset-0 opacity-25 group-hover:opacity-50 transition-opacity duration-300" />
 
-                                {/* Number */}
-                                <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-[10px] font-medium tracking-[0.15em] text-white backdrop-blur-md">
-                                    {photo.number}
+                                    {/* Frame Tag */}
+                                    <div className="absolute left-3.5 top-3.5 rounded-full border border-white/20 bg-black/50 px-2.5 py-1 font-mono text-[10px] font-semibold text-white shadow-md backdrop-blur-md">
+                                        {photo.number}
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Info */}
-                            <div className="mt-5">
+                            <div className="mt-4 px-2">
                                 <div className="flex items-center gap-3">
-                                    <p className="text-sm font-medium">
+                                    <h3 className="text-sm font-bold text-neutral-900">
                                         {photo.title}
-                                    </p>
-
-                                    <div className="h-px flex-1 bg-black/10" />
+                                    </h3>
+                                    <div className="h-px flex-1 bg-black/[0.08]" />
                                 </div>
 
-                                <div className="mt-2 flex items-center justify-between text-xs text-black/40">
+                                <div className="mt-1.5 flex items-center justify-between text-xs text-neutral-500 font-medium">
                                     <span>{photo.location}</span>
                                     <span>{photo.year}</span>
                                 </div>

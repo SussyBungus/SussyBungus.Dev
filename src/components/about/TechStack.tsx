@@ -4,54 +4,56 @@ import { motion } from "motion/react";
 
 const stack = [
     {
-        category: "Frontend",
+        category: "Frontend & Web",
         technologies: [
             "Next.js",
-            "React",
+            "React 19",
             "TypeScript",
             "JavaScript",
-            "HTML",
-            "CSS",
-            "Tailwind CSS",
+            "Tailwind CSS v4",
+            "GSAP",
+            "Motion",
             "React Native",
         ],
     },
     {
-        category: "Backend",
+        category: "Backend & Cloud",
         technologies: [
             "Node.js",
             "Python",
             "Supabase",
+            "PostgreSQL",
+            "REST APIs",
             "SQL",
         ],
     },
     {
-        category: "Tools",
+        category: "Developer Tooling",
         technologies: [
-            "Git",
-            "GitHub",
+            "Git & GitHub",
+            "Antigravity IDE",
             "VS Code",
             "Vercel",
-            "Expo",
+            "Windows Terminal",
             "Figma",
         ],
     },
     {
-        category: "Other",
+        category: "Systems & Foundations",
         technologies: [
             "C",
             "C++",
             "Java",
-            "Bash",
+            "Bash / PowerShell",
+            "Data Structures",
         ],
     },
 ];
 
 export default function TechStack() {
     return (
-        <section className="px-6 py-24">
+        <section className="px-6 py-20">
             <div className="mx-auto max-w-6xl">
-
                 {/* Heading */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -63,17 +65,22 @@ export default function TechStack() {
                     }}
                     className="mb-12"
                 >
-                    <p className="text-xs font-medium tracking-[0.2rem] text-black/35">
-                        03 / TECH STACK
-                    </p>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 px-3.5 py-1 text-xs font-medium text-neutral-500 shadow-xs backdrop-blur-md">
+                        <span>03</span>
+                        <span className="h-1 w-1 rounded-full bg-neutral-300" />
+                        <span>Tech Stack</span>
+                    </div>
 
-                    <h2 className="mt-4 max-w-xl text-3xl font-medium tracking-[-0.04em] sm:text-4xl">
-                        Technologies I use and learned
+                    <h2 className="mt-4 max-w-xl text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
+                        Technologies &amp; Libraries I Use
                     </h2>
+                    <p className="mt-2 text-base text-neutral-500">
+                        Languages, frameworks, and tools I leverage across projects.
+                    </p>
                 </motion.div>
 
-                {/* Stack */}
-                <div className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-black/10 bg-black/10 sm:grid-cols-2">
+                {/* Stack Grid */}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     {stack.map((group, groupIndex) => (
                         <motion.div
                             key={group.category}
@@ -87,40 +94,22 @@ export default function TechStack() {
                             }}
                             viewport={{
                                 once: true,
-                                amount: 0.25,
+                                amount: 0.2,
                             }}
                             transition={{
                                 duration: 0.6,
                                 delay: groupIndex * 0.08,
                                 ease: "easeOut",
                             }}
-                            className="bg-white p-8 sm:p-10"
+                            className="glass-panel group rounded-[2rem] p-7 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 sm:p-8"
                         >
                             {/* Category */}
-                            <motion.p
-                                initial={{
-                                    opacity: 0,
-                                    x: -10,
-                                }}
-                                whileInView={{
-                                    opacity: 1,
-                                    x: 0,
-                                }}
-                                viewport={{
-                                    once: true,
-                                }}
-                                transition={{
-                                    duration: 0.4,
-                                    delay: groupIndex * 0.08 + 0.1,
-                                    ease: "easeOut",
-                                }}
-                                className="text-xs font-semibold uppercase tracking-[0.15em] text-black/40"
-                            >
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
                                 {group.category}
-                            </motion.p>
+                            </p>
 
                             {/* Pills */}
-                            <div className="mt-6 flex flex-wrap gap-2">
+                            <div className="mt-5 flex flex-wrap gap-2">
                                 {group.technologies.map(
                                     (technology, technologyIndex) => (
                                         <motion.span
@@ -138,14 +127,14 @@ export default function TechStack() {
                                             }}
                                             transition={{
                                                 duration: 0.35,
-                                                delay: technologyIndex * 0.035,
+                                                delay: technologyIndex * 0.03,
                                                 ease: "easeOut",
                                             }}
                                             whileHover={{
-                                                y: -3,
-                                                scale: 1.03,
+                                                y: -2,
+                                                scale: 1.04,
                                             }}
-                                            className="cursor-default rounded-full border border-black/10 bg-black/[0.02] px-4 py-2 text-sm text-black/70"
+                                            className="glass-pill cursor-default rounded-full px-3.5 py-1.5 text-xs font-medium text-neutral-700 shadow-2xs transition-colors hover:text-black"
                                         >
                                             {technology}
                                         </motion.span>

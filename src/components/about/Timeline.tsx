@@ -1,6 +1,11 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type TimelineItem = {
     year: string;
@@ -66,107 +71,63 @@ function TimelineColumn({
     number,
     title,
     items,
+    columnRef,
 }: {
     number: string;
     title: string;
     items: TimelineItem[];
+    columnRef: React.RefObject<HTMLDivElement | null>;
 }) {
     return (
-        <div>
+        <div ref={columnRef}>
             {/* Column heading */}
-            <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{
-                    duration: 0.5,
-                    ease: [0.22, 1, 0.36, 1],
-                }}
-                className="mb-10 flex items-center gap-3"
-            >
-                <span className="text-xs font-medium tracking-[0.2em] text-black/35">
+            <div className="mb-10 flex items-center gap-3">
+                <span className="glass-pill rounded-full px-2.5 py-0.5 text-xs font-medium tracking-[0.2em] text-black/50">
                     {number}
                 </span>
 
                 <h3 className="text-sm font-semibold uppercase tracking-[0.15em]">
                     {title}
                 </h3>
-            </motion.div>
+            </div>
 
             <div className="relative">
-
                 {/* Timeline line */}
-                <motion.div
-                    initial={{ scaleY: 0 }}
-                    whileInView={{ scaleY: 1 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{
-                        duration: 1.2,
-                        ease: [0.22, 1, 0.36, 1],
-                    }}
-                    style={{ transformOrigin: "top" }}
-                    className="absolute bottom-2 left-[5px] top-2 w-px bg-black/10"
+                <div
+                    className="timeline-line absolute bottom-2 left-[5px] top-2 w-px bg-black/10"
+                    style={{ transformOrigin: "top", transform: "scaleY(0)" }}
                 />
 
-                <div className="space-y-10">
+                <div className="space-y-8">
                     {items.map((item, index) => (
-                        <motion.div
+                        <div
                             key={item.year}
-                            initial={{
-                                opacity: 0,
-                                x: -20,
-                            }}
-                            whileInView={{
-                                opacity: 1,
-                                x: 0,
-                            }}
-                            viewport={{
-                                once: true,
-                                amount: 0.3,
-                            }}
-                            transition={{
-                                duration: 0.6,
-                                delay: index * 0.1,
-                                ease: [0.22, 1, 0.36, 1],
-                            }}
-                            className="group relative pl-8"
+                            className="timeline-item group relative pl-8 opacity-0"
+                            style={{ transform: "translateX(-20px)" }}
                         >
                             {/* Dot */}
-                            <motion.div
-                                initial={{
-                                    opacity: 0,
-                                    scale: 0,
-                                }}
-                                whileInView={{
-                                    opacity: 1,
-                                    scale: 1,
-                                }}
-                                viewport={{ once: true }}
-                                transition={{
-                                    duration: 0.35,
-                                    delay: index * 0.1 + 0.15,
-                                    type: "spring",
-                                    stiffness: 300,
-                                    damping: 20,
-                                }}
-                                className="absolute left-0 top-1.5 z-10 h-[11px] w-[11px] rounded-full border-2 border-white bg-black ring-1 ring-black/10"
+                            <div
+                                className="timeline-dot absolute left-0 top-2 z-10 h-[11px] w-[11px] scale-0 rounded-full border-2 border-white bg-black ring-1 ring-black/10"
                             />
 
-                            {/* Year */}
-                            <p className="text-xs font-medium tracking-[0.12em] text-black/35">
-                                {item.year}
-                            </p>
+                            {/* Glass hover card */}
+                            <div className="rounded-2xl p-3 transition-all duration-300 group-hover:glass-pill group-hover:shadow-sm -mx-3">
+                                {/* Year pill */}
+                                <span className="inline-block rounded-full bg-black/[0.05] px-2 py-0.5 text-[10px] font-medium tracking-[0.12em] text-black/40">
+                                    {item.year}
+                                </span>
 
-                            {/* Title */}
-                            <h4 className="mt-2 text-lg font-medium tracking-[-0.02em] transition-transform duration-300 group-hover:translate-x-1">
-                                {item.title}
-                            </h4>
+                                {/* Title */}
+                                <h4 className="mt-2 text-lg font-medium tracking-[-0.02em] transition-transform duration-300 group-hover:translate-x-1">
+                                    {item.title}
+                                </h4>
 
-                            {/* Description */}
-                            <p className="mt-2 max-w-md text-sm leading-relaxed text-black/50">
-                                {item.description}
-                            </p>
-                        </motion.div>
+                                {/* Description */}
+                                <p className="mt-1.5 max-w-md text-sm leading-relaxed text-black/50">
+                                    {item.description}
+                                </p>
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>
@@ -175,8 +136,75 @@ function TimelineColumn({
 }
 
 export default function Timeline() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const col1Ref = useRef<HTMLDivElement>(null);
+    const col2Ref = useRef<HTMLDivElement>(null);
+
+    useGSAP(
+        () => {
+            const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+            if (prefersReducedMotion) return;
+
+            [col1Ref.current, col2Ref.current].forEach((col, colIdx) => {
+                if (!col) return;
+
+                // Animate the vertical line
+                const line = col.querySelector(".timeline-line");
+                if (line) {
+                    gsap.to(line, {
+                        scrollTrigger: {
+                            trigger: col,
+                            start: "top 80%",
+                            once: true,
+                        },
+                        scaleY: 1,
+                        duration: 1.1,
+                        delay: colIdx * 0.12,
+                        ease: "power3.out",
+                    });
+                }
+
+                // Animate items
+                const items = col.querySelectorAll(".timeline-item");
+                items.forEach((item, i) => {
+                    gsap.to(item, {
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 88%",
+                            once: true,
+                        },
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.6,
+                        delay: i * 0.08 + colIdx * 0.06,
+                        ease: "power3.out",
+                    });
+
+                    // Animate dot
+                    const dot = item.querySelector(".timeline-dot");
+                    if (dot) {
+                        gsap.to(dot, {
+                            scrollTrigger: {
+                                trigger: item,
+                                start: "top 88%",
+                                once: true,
+                            },
+                            scale: 1,
+                            duration: 0.35,
+                            delay: i * 0.08 + colIdx * 0.06 + 0.15,
+                            ease: "back.out(2)",
+                        });
+                    }
+                });
+            });
+        },
+        { scope: sectionRef }
+    );
+
     return (
-        <section className="px-6 py-24">
+        <section ref={sectionRef} className="px-6 py-24">
             <div className="mx-auto max-w-6xl">
 
                 <div className="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-20">
@@ -184,12 +212,14 @@ export default function Timeline() {
                         number="01"
                         title="Coding"
                         items={codingTimeline}
+                        columnRef={col1Ref}
                     />
 
                     <TimelineColumn
                         number="02"
                         title="Life"
                         items={lifeTimeline}
+                        columnRef={col2Ref}
                     />
                 </div>
 

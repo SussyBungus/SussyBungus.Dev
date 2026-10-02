@@ -8,10 +8,11 @@ export default function PageTransition({
     children: React.ReactNode;
 }) {
     return (
-        <motion.main
+        <motion.div
+            className="min-h-screen"
             initial={{
                 opacity: 0,
-                y: 18,
+                y: 14,
                 filter: "blur(4px)",
             }}
             animate={{
@@ -20,11 +21,11 @@ export default function PageTransition({
                 filter: "blur(0px)",
             }}
             transition={{
-                duration: 0.5,
-                ease: "easeOut",
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],
             }}
         >
             {children}
-        </motion.main>
+        </motion.div>
     );
 }

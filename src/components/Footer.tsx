@@ -1,27 +1,46 @@
-"use client"
+"use client";
+
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub, faInstagram, faLinkedin, faVsco } from "@fortawesome/free-brands-svg-icons";
+import {
+    faGithub,
+    faInstagram,
+    faLinkedin,
+    faVsco,
+} from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
-    return (
-        <footer className="bg-white px-4 py-5 text-center text-black">
-            <div className="mx-auto max-w-6xl">
-                <div className="flex flex-wrap items-center justify-between border-b border-black/15 px-2 pb-4 md:px-4">
-                    <Link
-                        href="/"
-                        className="text-[1.7rem] font-bold tracking-[-0.03em]"
-                    >
-                        Sussy Bungus.
-                    </Link>
+    const scrollToTop = () => {
+        if (typeof window !== "undefined") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    };
 
-                    <div className="mt-1 flex items-center justify-center gap-4">
+    return (
+        <footer className="relative mt-20 border-t border-black/[0.06] bg-white/40 px-6 py-10 backdrop-blur-md">
+            <div className="mx-auto max-w-6xl">
+                <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+                    {/* Brand */}
+                    <div className="flex flex-col items-center gap-1 sm:items-start">
+                        <Link
+                            href="/"
+                            className="text-xl font-bold tracking-tight text-neutral-900 transition-opacity hover:opacity-75"
+                        >
+                            Sussy Bungus.
+                        </Link>
+                        <p className="text-xs text-neutral-500">
+                            Raymond Lin &bull; Student, Developer &amp; Creator
+                        </p>
+                    </div>
+
+                    {/* Social badges with glossy hover */}
+                    <div className="flex items-center gap-2.5">
                         <a
                             href="https://github.com/SussyBungus"
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="GitHub"
-                            className="text-[1.3rem] transition-all duration-300 hover:scale-105 hover:text-black/50"
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/5 bg-white/70 text-sm text-neutral-700 shadow-xs backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-black/15 hover:bg-white hover:text-black hover:shadow-md"
                         >
                             <FontAwesomeIcon icon={faGithub} />
                         </a>
@@ -31,40 +50,48 @@ export default function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Instagram"
-                            className="text-[1.3rem] transition-all duration-300 hover:scale-105 hover:text-black/50"
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/5 bg-white/70 text-sm text-neutral-700 shadow-xs backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-black/15 hover:bg-white hover:text-black hover:shadow-md"
                         >
                             <FontAwesomeIcon icon={faInstagram} />
                         </a>
+
                         <a
                             href="https://www.linkedin.com/in/raymondjiaruilin/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label="Instagram"
-                            className="text-[1.3rem] transition-all duration-300 hover:scale-105 hover:text-black/50"
+                            aria-label="LinkedIn"
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/5 bg-white/70 text-sm text-neutral-700 shadow-xs backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-black/15 hover:bg-white hover:text-black hover:shadow-md"
                         >
                             <FontAwesomeIcon icon={faLinkedin} />
                         </a>
+
                         <a
                             href="https://vsco.co/sussybungus/gallery"
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label="Vsco"
-                            className="text-[1.3rem] transition-all duration-300 hover:scale-105 hover:text-black/50"
+                            aria-label="VSCO"
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/5 bg-white/70 text-sm text-neutral-700 shadow-xs backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-black/15 hover:bg-white hover:text-black hover:shadow-md"
                         >
                             <FontAwesomeIcon icon={faVsco} />
                         </a>
-
                     </div>
                 </div>
 
-                <div className="mt-3 flex items-center justify-center gap-3 text-xs text-black/50">
-                    <span>Sussy Bungus &copy; 2022 – {new Date().getFullYear()}</span>
-                    <span>&bull;</span>
-                    <span>YYZ</span>
-                    <span>&bull;</span>
-                    <a href="#" className="transition-opacity hover:opacity-50">
-                        Back To Top
-                    </a>
+                <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-black/[0.04] pt-6 text-xs text-neutral-400 sm:flex-row">
+                    <p>
+                        &copy; 2022 &ndash; {new Date().getFullYear()} Sussy Bungus &bull; Toronto (YYZ)
+                    </p>
+
+                    <button
+                        type="button"
+                        onClick={scrollToTop}
+                        className="group inline-flex items-center gap-1.5 font-medium text-neutral-600 transition-colors hover:text-neutral-950"
+                    >
+                        <span>Back to top</span>
+                        <span className="transition-transform duration-200 group-hover:-translate-y-0.5">
+                            &uarr;
+                        </span>
+                    </button>
                 </div>
             </div>
         </footer>

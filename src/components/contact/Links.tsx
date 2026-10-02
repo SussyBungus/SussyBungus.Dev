@@ -106,7 +106,7 @@ export default function ContactLinks() {
                                             duration: 0.25,
                                             ease: "easeOut",
                                         }}
-                                        className="flex min-h-[240px] flex-col justify-between rounded-[2rem] border border-black/10 bg-black/[0.015] p-7 transition-colors duration-300 hover:bg-black/[0.035] sm:p-8"
+                                        className="glass-panel flex min-h-[240px] flex-col justify-between rounded-[2.2rem] p-7 shadow-sm transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 sm:p-8"
                                     >
                                         {/* Top */}
                                         <div className="flex items-center justify-between">

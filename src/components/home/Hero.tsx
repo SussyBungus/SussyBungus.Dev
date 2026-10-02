@@ -1,17 +1,80 @@
 "use client";
 
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
-    return (
-        <section className="min-h-screen overflow-hidden px-6 pt-24">
-            <div className="mx-auto grid min-h-[calc(100vh-6rem)] max-w-6xl grid-cols-1 items-start gap-12 md:grid-cols-[0.9fr_1.1fr]">
+    const heroRef = useRef<HTMLElement>(null);
+    const cameraCardRef = useRef<HTMLDivElement>(null);
+    const [flash, setFlash] = useState(false);
+    const [shutterCount, setShutterCount] = useState(1);
 
-                {/* Left */}
+    // GSAP 3D Interactive Tilt on Camera
+    useGSAP(
+        () => {
+            const card = cameraCardRef.current;
+            if (!card) return;
+
+            // Check reduced motion
+            const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+            if (prefersReducedMotion) return;
+
+            const xTo = gsap.quickTo(card, "rotationY", {
+                duration: 0.6,
+                ease: "power2.out",
+            });
+            const yTo = gsap.quickTo(card, "rotationX", {
+                duration: 0.6,
+                ease: "power2.out",
+            });
+
+            const handleMouseMove = (e: MouseEvent) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                // Max tilt 10 degrees
+                xTo((x / (rect.width / 2)) * 10);
+                yTo(-(y / (rect.height / 2)) * 10);
+            };
+
+            const handleMouseLeave = () => {
+                xTo(0);
+                yTo(0);
+            };
+
+            card.addEventListener("mousemove", handleMouseMove);
+            card.addEventListener("mouseleave", handleMouseLeave);
+
+            return () => {
+                card.removeEventListener("mousemove", handleMouseMove);
+                card.removeEventListener("mouseleave", handleMouseLeave);
+            };
+        },
+        { scope: heroRef }
+    );
+
+    const triggerShutter = () => {
+        setFlash(true);
+        setShutterCount((prev) => prev + 1);
+        setTimeout(() => setFlash(false), 240);
+    };
+
+    return (
+        <section
+            ref={heroRef}
+            className="relative min-h-screen overflow-hidden px-6 pt-28 pb-16 sm:pt-32"
+        >
+            <div className="mx-auto grid min-h-[calc(100vh-8rem)] max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+                {/* Left Column: Typography & CTAs */}
                 <motion.div
                     initial="hidden"
                     animate="visible"
@@ -20,288 +83,267 @@ export default function Hero() {
                         visible: {
                             transition: {
                                 staggerChildren: 0.12,
-                                delayChildren: 0.15,
+                                delayChildren: 0.1,
                             },
                         },
                     }}
+                    className="z-10 flex flex-col justify-center"
                 >
-                    <motion.p
+                    {/* Status badge */}
+                    <motion.div
                         variants={{
-                            hidden: { opacity: 0, y: 20 },
+                            hidden: { opacity: 0, y: 15 },
                             visible: {
                                 opacity: 1,
                                 y: 0,
-                                transition: {
-                                    duration: 0.6,
-                                    ease,
-                                },
+                                transition: { duration: 0.5, ease },
                             },
                         }}
-                        className="mb-4 text-sm font-medium text-black/45"
+                        className="mb-6 inline-flex items-center gap-2 self-start rounded-full border border-black/5 bg-white/70 px-3.5 py-1 text-xs font-medium text-neutral-600 shadow-xs backdrop-blur-md"
+                    >
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>Available for new projects &bull; YYZ</span>
+                    </motion.div>
+
+                    <motion.p
+                        variants={{
+                            hidden: { opacity: 0, y: 15 },
+                            visible: {
+                                opacity: 1,
+                                y: 0,
+                                transition: { duration: 0.5, ease },
+                            },
+                        }}
+                        className="text-sm font-medium tracking-wide uppercase text-neutral-400"
                     >
                         hey, i'm
                     </motion.p>
 
                     <motion.h1
                         variants={{
-                            hidden: { opacity: 0, y: 35 },
+                            hidden: { opacity: 0, y: 30 },
                             visible: {
                                 opacity: 1,
                                 y: 0,
-                                transition: {
-                                    duration: 0.8,
-                                    ease,
-                                },
+                                transition: { duration: 0.75, ease },
                             },
                         }}
-                        className="text-6xl font-semibold tracking-[-0.05em] sm:text-7xl lg:text-8xl"
+                        className="mt-2 text-5xl font-extrabold tracking-[-0.05em] text-neutral-950 sm:text-6xl lg:text-7xl xl:text-8xl"
                     >
                         Raymond Lin.
                     </motion.h1>
 
                     <motion.p
                         variants={{
-                            hidden: { opacity: 0, y: 25 },
+                            hidden: { opacity: 0, y: 20 },
                             visible: {
                                 opacity: 1,
                                 y: 0,
-                                transition: {
-                                    duration: 0.7,
-                                    ease,
-                                },
+                                transition: { duration: 0.65, ease },
                             },
                         }}
-                        className="mt-7 max-w-lg text-lg leading-relaxed text-black/55 sm:text-xl"
+                        className="mt-6 max-w-lg text-lg leading-relaxed text-neutral-600 sm:text-xl"
                     >
-                        I build things on the internet, take photos, and turn
-                        random ideas into projects.
+                        I build thoughtful digital experiences, explore
+                        creative photography, and turn curiosity into functional
+                        software.
                     </motion.p>
 
+                    {/* CTAs */}
                     <motion.div
                         variants={{
                             hidden: { opacity: 0, y: 20 },
                             visible: {
                                 opacity: 1,
                                 y: 0,
-                                transition: {
-                                    duration: 0.6,
-                                    ease,
-                                },
+                                transition: { duration: 0.6, ease },
                             },
                         }}
-                        className="mt-9 flex flex-wrap gap-3"
+                        className="mt-8 flex flex-wrap items-center gap-3.5"
                     >
                         <Link
                             href="/projects"
-                            className="rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition-transform hover:scale-105"
+                            className="group relative inline-flex items-center gap-2 rounded-full bg-neutral-950 px-6 py-3 text-sm font-medium text-white shadow-[0_10px_25px_-5px_rgba(0,0,0,0.25),inset_0_1px_1px_0_rgba(255,255,255,0.25)] transition-all duration-300 hover:scale-105 hover:bg-neutral-900 hover:shadow-[0_15px_30px_-5px_rgba(0,0,0,0.3)]"
                         >
-                            Projects
+                            <span>Explore Projects</span>
+                            <span className="transition-transform duration-200 group-hover:translate-x-1">
+                                &rarr;
+                            </span>
                         </Link>
 
                         <Link
                             href="/about"
-                            className="rounded-full border border-black/10 bg-black/5 px-6 py-3 text-sm font-medium transition-colors hover:bg-black/10"
+                            className="glass-pill rounded-full px-6 py-3 text-sm font-medium text-neutral-800 transition-all duration-300 hover:scale-105 hover:bg-white"
                         >
                             About Me
                         </Link>
                     </motion.div>
                 </motion.div>
 
-                {/* Camera */}
+                {/* Right Column: Interactive 3D Glossy Camera */}
                 <motion.div
-                    initial={{
-                        opacity: 0,
-                        x: 80,
-                        y: 30,
-                        rotate: 5,
-                        scale: 0.92,
-                    }}
-                    animate={{
-                        opacity: 1,
-                        x: 0,
-                        y: 0,
-                        rotate: 0,
-                        scale: 1,
-                    }}
+                    initial={{ opacity: 0, scale: 0.92, y: 30 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{
-                        duration: 1.1,
-                        delay: 0.25,
+                        duration: 1,
+                        delay: 0.2,
                         ease,
                     }}
-                    className="flex w-full items-center justify-center md:mt-4"
+                    className="flex w-full items-center justify-center [perspective:1400px]"
                 >
-                    <motion.div
-                        animate={{
-                            y: [0, -8, 0],
-                            rotate: [0, 0.4, 0],
-                        }}
-                        transition={{
-                            duration: 5,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                        className="relative w-full max-w-[600px]"
+                    <div
+                        ref={cameraCardRef}
+                        className="relative w-full max-w-[580px] select-none [transform-style:preserve-3d]"
                     >
-                        {/* Camera body */}
-                        <div className="relative aspect-[1.45/1] w-full rounded-[2rem] bg-neutral-950 p-4 shadow-2xl sm:rounded-[2.5rem] sm:p-5 md:aspect-auto md:h-[350px] md:rounded-[3rem] md:p-6">
+                        {/* Ambient Camera Glow */}
+                        <div className="absolute -inset-6 -z-10 rounded-[3.5rem] bg-black/[0.04] blur-2xl" />
 
-                            {/* Top controls */}
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{
-                                    delay: 1,
-                                    duration: 0.6,
-                                }}
-                                className="flex items-center justify-between px-1 sm:px-2"
-                            >
+                        {/* Camera Body */}
+                        <div className="glass-dark relative aspect-[1.45/1] w-full rounded-[2.5rem] p-4 sm:rounded-[3rem] sm:p-6 md:aspect-auto md:h-[360px]">
+                            {/* Top HUD Controls */}
+                            <div className="flex items-center justify-between px-2 pt-1 sm:px-3">
                                 <div className="flex items-center gap-2 sm:gap-3">
-                                    <span className="text-[8px] font-semibold tracking-[0.2em] text-white/40 sm:text-[10px] sm:tracking-[0.25em]">
+                                    <span className="text-[9px] font-bold tracking-[0.25em] text-white/50 sm:text-[10px]">
                                         RAYMOND
                                     </span>
-
                                     <span className="h-1 w-1 rounded-full bg-white/20" />
-
-                                    <span className="text-[8px] tracking-[0.15em] text-white/30 sm:text-[10px] sm:tracking-[0.2em]">
+                                    <span className="text-[9px] tracking-[0.2em] text-white/35 sm:text-[10px]">
                                         DIGITAL
                                     </span>
                                 </div>
 
-                                <div className="flex items-center gap-1.5 sm:gap-2">
-                                    {/* REC light */}
-                                    <motion.span
-                                        animate={{
-                                            opacity: [1, 0.35, 1],
-                                            scale: [1, 0.85, 1],
-                                        }}
-                                        transition={{
-                                            duration: 1.4,
-                                            repeat: Infinity,
-                                            ease: "easeInOut",
-                                        }}
-                                        className="h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_7px_rgba(239,68,68,0.6)] sm:h-2 sm:w-2"
-                                    />
-
-                                    <span className="text-[8px] font-medium tracking-widest text-white/40 sm:text-[10px]">
-                                        REC
+                                <div className="flex items-center gap-2">
+                                    {/* Pulsing REC Indicator */}
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                                        <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                                    </span>
+                                    <span className="text-[9px] font-semibold tracking-widest text-white/50 sm:text-[10px]">
+                                        REC #{shutterCount.toString().padStart(2, "0")}
                                     </span>
                                 </div>
-                            </motion.div>
+                            </div>
 
-                            {/* Camera screen */}
-                            <div className="absolute bottom-4 left-4 top-14 w-[63%] overflow-hidden rounded-xl border border-white/10 bg-black sm:bottom-5 sm:left-5 sm:top-16 sm:rounded-2xl md:bottom-6 md:left-6 md:top-16">
+                            {/* Camera Viewfinder Screen with Glossy Lens Glare */}
+                            <div className="relative mt-3 h-[calc(100%-4rem)] w-[65%] overflow-hidden rounded-2xl border border-white/15 bg-black shadow-inner">
                                 <Image
                                     src="/raymond2.jpg"
-                                    alt="Photo by Raymond"
+                                    alt="Raymond Lin"
                                     fill
                                     priority
-                                    sizes="(max-width: 640px) 60vw, 360px"
+                                    sizes="(max-width: 640px) 60vw, 380px"
                                     className="object-cover"
                                 />
 
-                                <div className="absolute inset-0 bg-black/10" />
+                                {/* Subtle camera viewfinder darkening */}
+                                <div className="absolute inset-0 bg-black/15" />
 
-                                {/* Focus box */}
+                                {/* Specular glass lens glare */}
+                                <div className="glass-lens-glare pointer-events-none absolute inset-0 opacity-75" />
+
+                                {/* Shutter Flash Effect */}
+                                {flash && (
+                                    <div className="pointer-events-none absolute inset-0 z-30 bg-white transition-opacity duration-200" />
+                                )}
+
+                                {/* Reticle Target */}
                                 <motion.div
                                     animate={{
-                                        opacity: [0.5, 1, 0.5],
-                                        scale: [0.95, 1, 0.95],
+                                        opacity: [0.6, 0.95, 0.6],
+                                        scale: [0.97, 1.02, 0.97],
                                     }}
                                     transition={{
-                                        duration: 2.5,
+                                        duration: 2.8,
                                         repeat: Infinity,
                                         ease: "easeInOut",
                                     }}
-                                    className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 border border-white/70 sm:h-16 sm:w-16 md:h-20 md:w-20"
+                                    className="absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-lg border border-white/75 sm:h-18 sm:w-18"
                                 >
-                                    <span className="absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
+                                    <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-sm" />
+                                    {/* Corner bracket markers */}
+                                    <span className="absolute -left-1 -top-1 h-2 w-2 border-l-2 border-t-2 border-emerald-400" />
+                                    <span className="absolute -right-1 -top-1 h-2 w-2 border-r-2 border-t-2 border-emerald-400" />
+                                    <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-emerald-400" />
+                                    <span className="absolute -bottom-1 -right-1 h-2 w-2 border-b-2 border-r-2 border-emerald-400" />
                                 </motion.div>
 
-                                {/* Camera info */}
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 1.1 }}
-                                    className="absolute left-3 right-3 top-3 flex justify-between text-[7px] font-medium text-white drop-shadow sm:left-4 sm:right-4 sm:top-4 sm:text-[10px]"
-                                >
-                                    <span>AF-S</span>
-                                    <span>1/250</span>
-                                </motion.div>
+                                {/* Top Viewfinder Telemetry */}
+                                <div className="absolute left-3 right-3 top-2.5 flex justify-between text-[8px] font-mono font-medium text-white/90 drop-shadow-md sm:text-[9px]">
+                                    <span className="flex items-center gap-1">
+                                        <span className="h-1.5 w-1.5 rounded-xs bg-emerald-400" />
+                                        AF-C [EYE]
+                                    </span>
+                                    <span>RAW+JPG</span>
+                                </div>
 
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 1.2 }}
-                                    className="absolute bottom-3 left-3 right-3 flex justify-between text-[7px] font-medium text-white drop-shadow sm:bottom-4 sm:left-4 sm:right-4 sm:text-[10px]"
-                                >
+                                {/* Bottom Viewfinder Telemetry */}
+                                <div className="absolute bottom-2.5 left-3 right-3 flex justify-between text-[8px] font-mono font-medium text-white/90 drop-shadow-md sm:text-[9px]">
                                     <span>35mm</span>
-                                    <span>F2.8</span>
+                                    <span className="text-amber-300">F/2.8</span>
+                                    <span>1/250s</span>
                                     <span>ISO 400</span>
-                                </motion.div>
+                                </div>
                             </div>
 
-                            {/* Right controls */}
-                            <div className="absolute bottom-4 right-4 top-14 flex w-[27%] flex-col items-center justify-between sm:bottom-5 sm:right-5 sm:top-16 md:bottom-6 md:right-6">
-
-                                {/* Dial */}
+                            {/* Right Controls Panel */}
+                            <div className="absolute bottom-5 right-5 top-16 flex w-[26%] flex-col items-center justify-between">
+                                {/* Mode Dial */}
                                 <motion.div
-                                    whileHover={{ rotate: 30 }}
+                                    whileHover={{ rotate: 45 }}
                                     transition={{
                                         type: "spring",
-                                        stiffness: 200,
+                                        stiffness: 240,
+                                        damping: 15,
                                     }}
-                                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.03] shadow-inner sm:h-14 sm:w-14 md:h-16 md:w-16"
+                                    className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/5 shadow-md backdrop-blur-md sm:h-14 sm:w-14"
+                                    title="Click or drag dial"
                                 >
-                                    <div className="h-7 w-7 rounded-full border border-white/10 sm:h-9 sm:w-9 md:h-10 md:w-10">
-                                        <div className="mx-auto mt-1.5 h-1.5 w-1.5 rounded-full bg-white/60 sm:mt-2 sm:h-2 sm:w-2" />
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-black/40">
+                                        <div className="h-1.5 w-1.5 rounded-full bg-white/80 shadow-xs" />
                                     </div>
                                 </motion.div>
 
-                                {/* Buttons */}
-                                <div className="flex gap-2 sm:gap-3">
-                                    <motion.div
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        className="h-7 w-7 rounded-full border border-white/10 bg-white/5 sm:h-9 sm:w-9 md:h-10 md:w-10"
+                                {/* Secondary Action Buttons */}
+                                <div className="flex items-center gap-2">
+                                    <motion.button
+                                        type="button"
+                                        whileTap={{ scale: 0.85 }}
+                                        onClick={triggerShutter}
+                                        aria-label="Secondary preview shutter"
+                                        className="h-8 w-8 rounded-full border border-white/15 bg-white/5 shadow-inner transition-colors hover:bg-white/10"
+                                        title="Shutter preview"
                                     />
-
-                                    <motion.div
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        className="h-7 w-7 rounded-full border border-white/10 bg-white/5 sm:h-9 sm:w-9 md:h-10 md:w-10"
+                                    <motion.button
+                                        type="button"
+                                        whileTap={{ scale: 0.85 }}
+                                        onClick={triggerShutter}
+                                        aria-label="Secondary menu button"
+                                        className="h-8 w-8 rounded-full border border-white/15 bg-white/5 shadow-inner transition-colors hover:bg-white/10"
+                                        title="Snap"
                                     />
                                 </div>
 
-                                {/* Shutter */}
-                                <motion.div
-                                    whileHover={{ scale: 1.08 }}
-                                    whileTap={{ scale: 0.92 }}
-                                    className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/10 sm:h-14 sm:w-14 md:h-16 md:w-16"
+                                {/* Main Metallic Shutter Button */}
+                                <motion.button
+                                    type="button"
+                                    onClick={triggerShutter}
+                                    whileHover={{ scale: 1.06 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    aria-label="Take picture"
+                                    className="group relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 border-white/25 bg-neutral-800 shadow-[0_0_15px_rgba(255,255,255,0.1)] sm:h-14 sm:w-14"
+                                    title="Click to take snapshot!"
                                 >
-                                    <motion.div
-                                        whileTap={{ scale: 0.8 }}
-                                        className="h-7 w-7 rounded-full bg-white/90 shadow-lg sm:h-9 sm:w-9 md:h-10 md:w-10"
-                                    />
-                                </motion.div>
+                                    <div className="h-8 w-8 rounded-full bg-gradient-to-b from-white to-neutral-200 shadow-md group-active:scale-90 sm:h-9 sm:w-9" />
+                                </motion.button>
                             </div>
 
-                            {/* Bottom detail */}
-                            <motion.div
-                                animate={{
-                                    opacity: [0.2, 0.5, 0.2],
-                                }}
-                                transition={{
-                                    duration: 3,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                }}
-                                className="absolute bottom-3 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-white/10 sm:bottom-4 sm:w-20 md:bottom-5 md:w-24"
-                            />
+                            {/* Bottom Ambient Line */}
+                            <div className="absolute bottom-2 left-1/2 h-1 w-20 -translate-x-1/2 rounded-full bg-white/10" />
                         </div>
 
-                        {/* Camera base */}
-                        <div className="absolute -bottom-3 left-1/2 h-5 w-24 -translate-x-1/2 rounded-b-xl bg-neutral-900 shadow-xl sm:-bottom-4 sm:h-6 sm:w-28 md:h-7 md:w-32" />
-                    </motion.div>
+                        {/* Camera Tripod / Base Plate */}
+                        <div className="mx-auto h-3 w-28 rounded-b-xl border border-t-0 border-white/10 bg-neutral-900/90 shadow-xl" />
+                    </div>
                 </motion.div>
             </div>
         </section>
