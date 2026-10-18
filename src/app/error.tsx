@@ -5,6 +5,6 @@ export default function NotFound(){
         <ErrorPage
             code="505"
             title="Camera Malfunciton"
-            description="something went wrong" />
+            description="something went wrong!" />
     )
 }
