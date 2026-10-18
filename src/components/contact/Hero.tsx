@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 export default function ContactHero() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -31,21 +32,17 @@ export default function ContactHero() {
             <div className="mx-auto max-w-6xl">
                 <div ref={containerRef}>
                     {/* Label */}
-                    <div className="inline-flex items-center gap-2">
-                        <span className="glass-pill rounded-full px-3 py-1 text-xs font-medium tracking-[0.2em] text-black/50">
-                            06 / LET&apos;S TALK
-                        </span>
-                    </div>
+                    <SectionBadge number="01" label="Contact" />
 
                     {/* Heading */}
-                    <h1 className="mt-6 max-w-4xl text-5xl font-semibold tracking-[-0.055em] sm:text-6xl lg:text-7xl">
+                    <h1 className="mt-6 max-w-4xl text-5xl font-extrabold tracking-[-0.055em] text-neutral-950 sm:text-6xl lg:text-7xl">
                         Wanna chat with me?
                     </h1>
 
                     {/* Description */}
-                    <p className="mt-6 max-w-xl text-base leading-relaxed text-black/50 sm:text-lg">
+                    <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg">
                         Whether you want to talk about a project, collaborate,
-                        or just say hi, here&apos;s where you can find me.
+                        or just say hi, here&apos;s where you can reach me.
                     </p>
 
                     {/* Online indicator */}

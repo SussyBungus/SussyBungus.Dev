@@ -7,6 +7,7 @@ type ErrorPageProps = {
     code: string;
     title: string;
     description: string;
+    onReset?: () => void;
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -15,6 +16,7 @@ export default function ErrorPage({
     code,
     title,
     description,
+    onReset,
 }: ErrorPageProps) {
     return (
         <main className="flex min-h-[calc(100vh-5rem)] items-center justify-center px-6">
@@ -134,11 +136,20 @@ export default function ErrorPage({
                             },
                         },
                     }}
-                    className="mt-8"
+                    className="mt-8 flex flex-wrap items-center justify-center gap-3"
                 >
+                    {onReset && (
+                        <button
+                            type="button"
+                            onClick={onReset}
+                            className="inline-flex cursor-pointer rounded-full bg-black px-6 py-3 text-sm font-medium text-white shadow-md transition-all duration-300 hover:scale-105 hover:bg-neutral-900"
+                        >
+                            Try Again
+                        </button>
+                    )}
                     <Link
                         href="/"
-                        className="inline-flex rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition-transform duration-300 hover:scale-105"
+                        className="glass-pill inline-flex rounded-full px-6 py-3 text-sm font-medium text-neutral-800 transition-all duration-300 hover:scale-105 hover:bg-white"
                     >
                         Back Home
                     </Link>

@@ -3,10 +3,10 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -113,14 +113,10 @@ export default function OtherProjects() {
             <div className="mx-auto max-w-6xl">
                 {/* Heading */}
                 <div className="mb-12">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 px-3.5 py-1 text-xs font-medium text-neutral-500 shadow-xs backdrop-blur-md">
-                        <span>02</span>
-                        <span className="h-1 w-1 rounded-full bg-neutral-300" />
-                        <span>All Projects</span>
-                    </div>
+                    <SectionBadge number="03" label="All Projects" />
 
                     <h2 className="mt-4 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
-                        More Things I've Built
+                        More Things I&apos;ve Built
                     </h2>
                     <p className="mt-2 text-base text-neutral-500">
                         A curated archive of tools, applications, and experiments.

@@ -5,6 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,9 +48,11 @@ export default function CTA() {
                     <div className="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-white/[0.04] blur-3xl" />
 
                     <div className="relative">
-                        <span className="inline-block rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium tracking-[0.2em] text-white/60 backdrop-blur-md">
-                            04 / WHAT&apos;S NEXT
-                        </span>
+                        <SectionBadge
+                            number="04"
+                            label="What's Next"
+                            className="bg-white/10 text-white/90 border-white/20"
+                        />
 
                         <div className="mt-8 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
                             <div>

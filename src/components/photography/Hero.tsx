@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 export default function Hero() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -43,19 +44,16 @@ export default function Hero() {
             <div className="mx-auto max-w-6xl">
                 {/* Intro */}
                 <div ref={headerRef}>
-                    <span className="glass-pill inline-block rounded-full px-3 py-1 text-xs font-medium tracking-[0.2em] text-black/50">
-                        01 / PHOTOGRAPHY
-                    </span>
+                    <SectionBadge number="01" label="Photography" />
 
-                    <h1 className="mt-6 max-w-4xl text-5xl font-semibold tracking-[-0.055em] sm:text-7xl lg:text-8xl">
+                    <h1 className="mt-6 max-w-4xl text-5xl font-extrabold tracking-[-0.055em] text-neutral-950 sm:text-7xl lg:text-8xl">
                         Moments worth
                         <br />
                         remembering.
                     </h1>
 
-                    <p className="mt-7 max-w-xl text-base leading-relaxed text-black/50 sm:text-lg">
-                        Photos from trips, random walks, hangouts, and
-                        everything in between.
+                    <p className="mt-7 max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg">
+                        Photos from trips, random walks, street captures, and everything in between.
                     </p>
                 </div>
 

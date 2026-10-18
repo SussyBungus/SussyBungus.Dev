@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 export default function ProjectsHero() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -31,21 +32,16 @@ export default function ProjectsHero() {
             <div className="mx-auto max-w-6xl">
                 <div ref={containerRef}>
                     {/* Label */}
-                    <div className="inline-flex items-center gap-2">
-                        <span className="glass-pill rounded-full px-3 py-1 text-xs font-medium tracking-[0.2em] text-black/50">
-                            01 / PROJECTS
-                        </span>
-                    </div>
+                    <SectionBadge number="01" label="Projects" />
 
                     {/* Heading */}
-                    <h1 className="mt-6 max-w-4xl text-5xl font-semibold tracking-[-0.05em] sm:text-6xl lg:text-8xl">
+                    <h1 className="mt-6 max-w-4xl text-5xl font-extrabold tracking-[-0.05em] text-neutral-950 sm:text-6xl lg:text-7xl">
                         Things I&apos;ve built.
                     </h1>
 
                     {/* Description */}
-                    <p className="mt-7 max-w-2xl text-lg leading-relaxed text-black/50 sm:text-xl">
-                        A collection of projects, experiments, and ideas I&apos;ve
-                        turned into something real.
+                    <p className="mt-6 max-w-2xl text-lg leading-relaxed text-neutral-600 sm:text-xl">
+                        A curated collection of software, web applications, and experiments I&apos;ve engineered.
                     </p>
 
                     {/* Metadata pills */}

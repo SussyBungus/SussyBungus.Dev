@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://sussybungusdev.vercel.app"),
     title: "Sussy Bungus.Dev",
     description: "Raymond Lin's personal portfolio.",
 

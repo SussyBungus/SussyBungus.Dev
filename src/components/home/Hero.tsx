@@ -62,9 +62,50 @@ export default function Hero() {
         { scope: heroRef }
     );
 
+    const playShutterSound = () => {
+        try {
+            const AudioContextClass =
+                window.AudioContext ||
+                (window as unknown as { webkitAudioContext: typeof AudioContext })
+                    .webkitAudioContext;
+            if (!AudioContextClass) return;
+            const ctx = new AudioContextClass();
+            const now = ctx.currentTime;
+
+            // Primary mechanical click
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(850, now);
+            osc.frequency.exponentialRampToValueAtTime(140, now + 0.04);
+            gain.gain.setValueAtTime(0.14, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.04);
+
+            // Shutter curtain clack
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.type = "triangle";
+            osc2.frequency.setValueAtTime(420, now + 0.05);
+            osc2.frequency.exponentialRampToValueAtTime(70, now + 0.1);
+            gain2.gain.setValueAtTime(0.12, now + 0.05);
+            gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start(now + 0.05);
+            osc2.stop(now + 0.1);
+        } catch {
+            // Audio context restricted or muted
+        }
+    };
+
     const triggerShutter = () => {
         setFlash(true);
         setShutterCount((prev) => prev + 1);
+        playShutterSound();
         setTimeout(() => setFlash(false), 240);
     };
 
@@ -73,7 +114,7 @@ export default function Hero() {
             ref={heroRef}
             className="relative min-h-screen overflow-hidden px-6 pt-28 pb-16 sm:pt-32"
         >
-            <div className="mx-auto grid min-h-[calc(100vh-8rem)] max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+            <div className="mx-auto grid min-h-[calc(100vh-8rem)] max-w-6xl max-h-[960px] grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
                 {/* Left Column: Typography & CTAs */}
                 <motion.div
                     initial="hidden"
@@ -116,7 +157,7 @@ export default function Hero() {
                         }}
                         className="text-sm font-medium tracking-wide uppercase text-neutral-400"
                     >
-                        hey, i'm
+                        hey, i&apos;m
                     </motion.p>
 
                     <motion.h1

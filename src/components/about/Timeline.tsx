@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -99,7 +100,7 @@ function TimelineColumn({
                 />
 
                 <div className="space-y-8">
-                    {items.map((item, index) => (
+                    {items.map((item) => (
                         <div
                             key={item.year}
                             className="timeline-item group relative pl-8 opacity-0"
@@ -204,8 +205,18 @@ export default function Timeline() {
     );
 
     return (
-        <section ref={sectionRef} className="px-6 py-24">
+        <section ref={sectionRef} className="px-6 py-20 sm:py-24">
             <div className="mx-auto max-w-6xl">
+                {/* Section Header */}
+                <div className="mb-14">
+                    <SectionBadge number="02" label="Timeline" />
+                    <h2 className="mt-4 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
+                        My Journey So Far.
+                    </h2>
+                    <p className="mt-2 text-base text-neutral-500">
+                        Milestones and formative moments across code, academics, and sports.
+                    </p>
+                </div>
 
                 <div className="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-20">
                     <TimelineColumn

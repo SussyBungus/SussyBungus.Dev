@@ -1,9 +1,11 @@
-import ErrorPage from "@/components/ErrorPage"
-export default function NotFound(){
-    return(
+import ErrorPage from "@/components/ErrorPage";
+
+export default function NotFound() {
+    return (
         <ErrorPage
             code="404"
             title="FRAME NOT FOUND"
-            description="the page your looking for does exsict" />
-    )
+            description="The page you're looking for doesn't exist or has moved."
+        />
+    );
 }

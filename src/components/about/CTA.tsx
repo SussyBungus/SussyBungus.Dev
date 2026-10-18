@@ -5,6 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,16 +48,12 @@ export default function CTA() {
 
                     <div className="relative">
                         {/* Label */}
-                        <div className="inline-flex items-center gap-2">
-                            <span className="glass-pill rounded-full px-3 py-1 text-xs font-medium tracking-[0.2em] text-black/50">
-                                06 / LET&apos;S TALK
-                            </span>
-                        </div>
+                        <SectionBadge number="06" label="Let's Talk" />
 
                         <div className="mt-8 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
                             {/* Text */}
                             <div>
-                                <h2 className="max-w-2xl text-4xl font-medium leading-[1.1] tracking-[-0.05em] sm:text-5xl lg:text-6xl">
+                                <h2 className="max-w-2xl text-4xl font-bold leading-[1.1] tracking-[-0.05em] text-neutral-950 sm:text-5xl lg:text-6xl">
                                     Have an idea?
                                     <br />
                                     Let&apos;s make something.

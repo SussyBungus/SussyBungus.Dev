@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -88,11 +89,9 @@ export default function Background() {
 
                 {/* Section heading */}
                 <div ref={headingRef} className="mb-14">
-                    <p className="text-xs font-medium tracking-[0.2em] text-black/35">
-                        05 / BACKGROUND
-                    </p>
+                    <SectionBadge number="05" label="Background" />
 
-                    <h2 className="mt-4 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">
+                    <h2 className="mt-4 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
                         A little more about my background.
                     </h2>
                 </div>

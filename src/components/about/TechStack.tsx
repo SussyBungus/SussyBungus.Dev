@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import SectionBadge from "@/components/SectionBadge";
 
 const stack = [
     {
@@ -65,11 +66,7 @@ export default function TechStack() {
                     }}
                     className="mb-12"
                 >
-                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 px-3.5 py-1 text-xs font-medium text-neutral-500 shadow-xs backdrop-blur-md">
-                        <span>03</span>
-                        <span className="h-1 w-1 rounded-full bg-neutral-300" />
-                        <span>Tech Stack</span>
-                    </div>
+                    <SectionBadge number="03" label="Tech Stack" />
 
                     <h2 className="mt-4 max-w-xl text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
                         Technologies &amp; Libraries I Use

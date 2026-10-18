@@ -19,7 +19,7 @@ export default function Navbar() {
 
     return (
         <header className="fixed left-0 right-0 top-0 z-50 px-4 pt-4 sm:px-6">
-            <nav className="mx-auto max-w-5xl">
+            <nav className="mx-auto max-w-6xl">
                 {/* Main glossy glass navbar */}
                 <div className="flex items-center justify-between rounded-full border border-white/80 bg-white/70 px-5 py-2 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.06),inset_0_1px_1px_0_rgba(255,255,255,0.95)] backdrop-blur-2xl transition-all duration-300 sm:px-6">
                     {/* Logo */}
@@ -46,10 +46,12 @@ export default function Navbar() {
                         </motion.span>
                     </Link>
 
-                    {/* Desktop links with sliding glass pill */}
+                    {/* Desktop links with sliding glass pill & Cmd+K */}
                     <div className="hidden items-center gap-1 sm:flex">
                         {links.map((link) => {
-                            const active = pathname === link.href;
+                            const active =
+                                pathname === link.href ||
+                                (link.href !== "/" && pathname.startsWith(link.href));
 
                             return (
                                 <Link
@@ -80,6 +82,25 @@ export default function Navbar() {
                                 </Link>
                             );
                         })}
+
+                        {/* Quick Command Palette trigger */}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                window.dispatchEvent(
+                                    new KeyboardEvent("keydown", {
+                                        key: "k",
+                                        metaKey: true,
+                                        bubbles: true,
+                                    })
+                                );
+                            }}
+                            title="Open Command Palette (Cmd + K)"
+                            aria-label="Open Command Palette"
+                            className="ml-2 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-black/5 bg-black/[0.04] px-2.5 py-1 text-[11px] font-mono font-medium text-neutral-500 transition-colors hover:bg-black/10 hover:text-neutral-900"
+                        >
+                            <span>⌘K</span>
+                        </button>
                     </div>
 
                     {/* Mobile menu toggle */}
@@ -134,7 +155,9 @@ export default function Navbar() {
                             className="mt-2 overflow-hidden rounded-3xl border border-white/80 bg-white/85 p-3 shadow-2xl backdrop-blur-2xl sm:hidden"
                         >
                             {links.map((link, index) => {
-                                const active = pathname === link.href;
+                                const active =
+                                    pathname === link.href ||
+                                    (link.href !== "/" && pathname.startsWith(link.href));
 
                                 return (
                                     <motion.div

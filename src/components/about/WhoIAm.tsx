@@ -5,6 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -115,20 +116,18 @@ export default function WhoIAm() {
                 {/* Content */}
                 <div ref={contentRef} className="max-w-2xl">
 
-                    {/* Label */}
-                    <p className="text-xs font-medium tracking-[0.2em] text-black/35">
-                        01 / WHO I AM
-                    </p>
+                    {/* Badge */}
+                    <SectionBadge number="01" label="Who I Am" />
 
                     {/* Heading */}
-                    <h2 className="mt-6 text-3xl font-medium leading-tight tracking-[-0.04em] sm:text-4xl">
+                    <h2 className="mt-6 text-3xl font-bold leading-tight tracking-[-0.04em] text-neutral-950 sm:text-4xl">
                         I&apos;m Raymond — a developer,
                         photographer, and someone who
                         likes making things.
                     </h2>
 
                     {/* Paragraphs */}
-                    <div className="mt-8 space-y-5 text-base leading-relaxed text-black/50 sm:text-lg">
+                    <div className="mt-8 space-y-5 text-base leading-relaxed text-neutral-600 sm:text-lg">
                         <p>
                             I enjoy building things from scratch, experimenting
                             with new ideas, and learning how things work.

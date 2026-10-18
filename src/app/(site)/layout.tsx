@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CommandPalette from "@/components/CommandPalette";
 
 export default function SiteLayout({
   children,
@@ -9,6 +10,7 @@ export default function SiteLayout({
   return (
     <>
       <Navbar />
+      <CommandPalette />
       {children}
       <Footer />
     </>

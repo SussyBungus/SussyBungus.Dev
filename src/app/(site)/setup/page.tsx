@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
+import SectionBadge from "@/components/SectionBadge";
 
 const categories = [
     {
@@ -107,11 +108,7 @@ export default function SetupPage() {
                     transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                     className="mb-16"
                 >
-                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 px-3.5 py-1 text-xs font-medium text-neutral-500 shadow-xs backdrop-blur-md">
-                        <span>Workspace</span>
-                        <span className="h-1 w-1 rounded-full bg-neutral-300" />
-                        <span>Setup &amp; Gear</span>
-                    </div>
+                    <SectionBadge number="Workspace" label="Setup & Gear" />
 
                     <h1 className="mt-5 text-4xl font-extrabold tracking-[-0.04em] text-neutral-950 sm:text-5xl lg:text-6xl">
                         Tools, Gear &amp; Workspace.

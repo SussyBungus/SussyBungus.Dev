@@ -1,16 +1,18 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
+    const [isFlipped, setIsFlipped] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
@@ -59,11 +61,7 @@ export default function About() {
                 <div className="grid items-center gap-16 lg:grid-cols-[1fr_1fr]">
                     {/* Left: Content */}
                     <div ref={textRef} className="min-w-0">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 px-3.5 py-1 text-xs font-medium text-neutral-500 shadow-xs backdrop-blur-md">
-                            <span>01</span>
-                            <span className="h-1 w-1 rounded-full bg-neutral-300" />
-                            <span>About</span>
-                        </div>
+                        <SectionBadge number="01" label="About" />
 
                         <h2 className="mt-6 max-w-2xl text-4xl font-bold tracking-[-0.04em] text-neutral-950 sm:text-5xl lg:text-6xl">
                             Building things, figuring out how they work.
@@ -71,13 +69,13 @@ export default function About() {
 
                         <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-neutral-600">
                             <p>
-                                I'm <strong className="font-semibold text-neutral-900">Raymond Lin</strong>, a student and developer focused on turning ideas into clean, functional tools and web experiences.
+                                I&apos;m <strong className="font-semibold text-neutral-900">Raymond Lin</strong>, a student and developer focused on turning ideas into clean, functional tools and web experiences.
                             </p>
                             <p>
                                 Beyond software engineering, I spend my time capturing architecture and street life on my Canon EOS R50, playing badminton, and exploring design systems.
                             </p>
                             <p>
-                                This website is my creative canvas—a collection of things I've built, learned, and refined.
+                                This website is my creative canvas—a collection of things I&apos;ve built, learned, and refined.
                             </p>
                         </div>
 
@@ -103,13 +101,15 @@ export default function About() {
 
                             {/* Hover / Tap Hint */}
                             <div className="mb-3 flex items-center justify-center gap-1.5 text-[10px] font-medium tracking-wider uppercase text-neutral-400 sm:opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                <span>✦ Hover / Tap to flip</span>
+                                <span>✦ Tap / Hover to flip</span>
                             </div>
 
                             {/* Flip Container */}
                             <motion.div
+                                onClick={() => setIsFlipped((prev) => !prev)}
                                 className="relative w-full cursor-pointer [transform-style:preserve-3d]"
-                                whileHover={{ rotateY: 180 }}
+                                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                                whileHover={{ rotateY: isFlipped ? 0 : 180 }}
                                 transition={{
                                     duration: 0.85,
                                     ease: [0.22, 1, 0.36, 1],

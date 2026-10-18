@@ -5,6 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SectionBadge from "@/components/SectionBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -85,12 +86,10 @@ export default function WhatIDo() {
 
                 {/* Heading */}
                 <div ref={headingRef} className="mb-14">
-                    <p className="text-xs font-medium tracking-[0.2em] text-black/35">
-                        04 / WHAT I DO
-                    </p>
+                    <SectionBadge number="04" label="What I Do" />
 
-                    <h2 className="mt-4 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">
-                        Things I spend my free time doing
+                    <h2 className="mt-4 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
+                        Things I spend my free time doing.
                     </h2>
                 </div>
 
